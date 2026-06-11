@@ -6,6 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserEntity } from './modules/users/entities/users.entity';
 import { UserSessionEntity } from './modules/auth/entities/user_session.entity';
 import { AuthModule } from './modules/auth/auth.module';
+import { MasterModule } from './modules/master/master.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AuthModule } from './modules/auth/auth.module';
       },
     }),
     AuthModule,
+    MasterModule
   ],
   controllers: [AppController],
   providers: [AppService],
