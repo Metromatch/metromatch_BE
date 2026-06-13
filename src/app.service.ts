@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
-// @Injectable()
+@Injectable()
 export class AppService {
-  getHello(text: string | null = 'World'): string {
-    return 'Hello ' + text;
+  getHello(): string {
+    return 'Metromatch API is running!';
   }
 }
