@@ -26,4 +26,11 @@ export class ProfilePhotoRepository {
     async updateById(id: string, data: Partial<ProfilePhoto>): Promise<any> {
         return this.repository.update({ id }, data);
     }
+
+    async findByUserIds(userIds: string[]): Promise<ProfilePhoto[]> {
+        if (!userIds.length) return [];
+        return this.repository.createQueryBuilder('photo')
+            .where('photo.userId IN (:...userIds)', { userIds })
+            .getMany();
+    }
 }

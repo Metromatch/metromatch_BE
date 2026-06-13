@@ -26,4 +26,12 @@ export class ProfileRepository {
     async updateById(id: string, data: Partial<Profile>): Promise<any> {
         return this.repository.update({ id }, data);
     }
+
+    async findWithPagination(skip: number, take: number): Promise<[Profile[], number]> {
+        return this.repository.findAndCount({
+            skip,
+            take,
+            order: { createdAt: 'DESC' }
+        });
+    }
 }
