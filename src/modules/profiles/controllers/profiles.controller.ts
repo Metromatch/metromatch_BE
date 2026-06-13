@@ -9,7 +9,7 @@ export class ProfilesController {
         private readonly profileService: ProfileService,
         private readonly profilePreferenceService: ProfilePreferenceService,
         private readonly profilePhotoService: ProfilePhotoService,
-    ) {}
+    ) { }
 
     @Get()
     async getProfiles(
@@ -18,29 +18,11 @@ export class ProfilesController {
     ) {
         const page = parseInt(pageStr, 10) || 1;
         const limit = parseInt(limitStr, 10) || 10;
-        
-        const [profiles, total] = await this.profileService.findWithPagination(page, limit);
-        
-        const userIds = profiles.map(p => p.userId);
-        const photos = userIds.length > 0 
-            ? await this.profilePhotoService.findByUserIds(userIds)
-            : [];
-        
-        const photosByUserId = photos.reduce((acc: any, photo) => {
-            if (!acc[photo.userId]) {
-                acc[photo.userId] = [];
-            }
-            acc[photo.userId].push(photo);
-            return acc;
-        }, {});
-        
-        const items = profiles.map(profile => ({
-            ...profile,
-            photos: photosByUserId[profile.userId] || [],
-        }));
-        
+
+        const [profiles, total] = await this.profileService.findProfilesWithPhotos(page, limit);
+
         return {
-            data: items,
+            data: profiles,
             meta: {
                 total,
                 page,
@@ -56,11 +38,13 @@ export class ProfilesController {
         if (!userId) {
             throw new UnauthorizedException('User not authenticated or missing user in request object');
         }
-        
-        const profile = await this.profileService.findByUserId(userId);
-        const preferences = await this.profilePreferenceService.findByUserId(userId);
-        const photos = await this.profilePhotoService.findByUserId(userId);
-        
+
+        const [profile, preferences, photos] = await Promise.all([
+            this.profileService.findByUserId(userId),
+            this.profilePreferenceService.findByUserId(userId),
+            this.profilePhotoService.findByUserId(userId),
+        ]);
+
         return {
             profile,
             preferences,

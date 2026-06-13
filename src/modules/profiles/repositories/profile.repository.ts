@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Profile } from "../entities/profils.entity";
+import { ProfilePhoto } from "../entities/profile_photos.entity";
 
 @Injectable()
 export class ProfileRepository {
@@ -27,11 +28,17 @@ export class ProfileRepository {
         return this.repository.update({ id }, data);
     }
 
-    async findWithPagination(skip: number, take: number): Promise<[Profile[], number]> {
-        return this.repository.findAndCount({
-            skip,
-            take,
-            order: { createdAt: 'DESC' }
-        });
+    async findProfilesWithPhotos(skip: number, take: number): Promise<[Profile[], number]> {
+        return this.repository.createQueryBuilder('profile')
+            .leftJoinAndMapMany(
+                'profile.photos',
+                ProfilePhoto,
+                'photo',
+                'photo.userId = profile.userId'
+            )
+            .orderBy('profile.createdAt', 'DESC')
+            .skip(skip)
+            .take(take)
+            .getManyAndCount();
     }
 }
