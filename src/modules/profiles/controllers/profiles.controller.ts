@@ -1,10 +1,12 @@
 import { Controller, Get, Query, Request, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ProfileService } from '../services/profile.service';
 import { ProfilePreferenceService } from '../services/profile_preferences.service';
 import { ProfilePhotoService } from '../services/profile_photos.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { PaginationQueryDto } from '../dto/pagination-query.dto';
 
+@ApiTags('profiles')
 @Controller('profiles')
 export class ProfilesController {
     constructor(
@@ -33,6 +35,7 @@ export class ProfilesController {
         };
     }
 
+    @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
     @Get('me')
     async getMe(@Request() req: any) {

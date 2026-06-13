@@ -1,8 +1,10 @@
 import { BadRequestException, Body, Controller, Get, Post } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 import { MasterlistService } from "../services/masterlist.service";
 import { IMasterListEnumKeys } from "../master.interface";
 import { GetMasterlistDto } from "../dto/get-masterlist.dto";
 
+@ApiTags('masterlist')
 @Controller('/masterlist')
 export class MasterlistController {
     constructor(
