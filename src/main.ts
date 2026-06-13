@@ -2,15 +2,18 @@ import { NestFactory } from '@nestjs/core';
 import { VersioningType, ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import helmet from 'helmet';
+import { Logger } from 'nestjs-pino';
 import { AppModule } from './app.module';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
 async function bootstrap() {
   try {
-    const app = await NestFactory.create(AppModule).catch((error) => {
+    const app = await NestFactory.create(AppModule, { bufferLogs: true }).catch((error) => {
       throw error;
     });
+
+    app.useLogger(app.get(Logger));
 
     app.use(helmet());
     app.enableCors();
