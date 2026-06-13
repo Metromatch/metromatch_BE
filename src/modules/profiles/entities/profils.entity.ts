@@ -12,10 +12,13 @@ export class Profile {
     name: string
 
     @Column({ nullable: true })
-    age: number
+    dob: Date
 
     @Column({ nullable: true })
-    profession: string
+    drinkingHabits: string
+
+    @Column({ nullable: true })
+    smokingHabits: string
 
     @Column({ nullable: true })
     gender: string
@@ -28,4 +31,19 @@ export class Profile {
 
     @Column({ nullable: true })
     weightKg: number
+
+    @Column({ nullable: true })
+    diet: string
+
+    @Column({ nullable: true })
+    travelFrequency: string
+
+    @Column('text', { nullable: true, array: true, default: '{}' })
+    travelTimeSlots: string[]
+
+    @Column({ default: new Date() })
+    createdAt: Date
+
+    @Column({ default: new Date() })
+    updatedAt: Date
 }
