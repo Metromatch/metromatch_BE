@@ -1,10 +1,13 @@
-import { BadRequestException, Body, Controller, Get, Post } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { BadRequestException, Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { MasterlistService } from "../services/masterlist.service";
 import { IMasterListEnumKeys } from "../master.interface";
 import { GetMasterlistDto } from "../dto/get-masterlist.dto";
+import { JwtAuthGuard } from "../../auth/guards/jwt-auth.guard";
 
 @ApiTags('masterlist')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('/masterlist')
 export class MasterlistController {
     constructor(
