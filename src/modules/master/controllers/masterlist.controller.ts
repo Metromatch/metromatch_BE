@@ -1,6 +1,7 @@
 import { BadRequestException, Body, Controller, Get, Post } from "@nestjs/common";
 import { MasterlistService } from "../services/masterlist.service";
 import { IMasterListEnumKeys } from "../master.interface";
+import { GetMasterlistDto } from "../dto/get-masterlist.dto";
 
 @Controller('/masterlist')
 export class MasterlistController {
@@ -9,7 +10,7 @@ export class MasterlistController {
     ) { }
 
     @Post()
-    getAllMasterLists(@Body() data: { keys: (keyof IMasterListEnumKeys)[] }) {
+    getAllMasterLists(@Body() data: GetMasterlistDto) {
 
         const { keys } = data;
         const result = {}

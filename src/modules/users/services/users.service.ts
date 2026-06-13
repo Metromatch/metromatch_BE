@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { UsersRepository } from "../../users/repositories/users.repository";
 import { UserEntity } from "../../users/entities/users.entity";
+import { ICreateUserPayload } from "../interfaces/user.interface";
 
 @Injectable()
 export class UsersService {
@@ -14,7 +15,7 @@ export class UsersService {
     getByPhone(phone: string): Promise<UserEntity | null> {
         return this.usersRepository.findByPhone(phone)
     }
-    async createUser(data: { email: string, phone: string, passwordHash: string }): Promise<UserEntity> {
+    async createUser(data: ICreateUserPayload): Promise<UserEntity> {
         const existingUser = await this.getByEmail(data.email)
         if (existingUser) {
             throw new Error('User already exists')
