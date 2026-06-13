@@ -16,8 +16,13 @@ import { ProfilesModule } from './modules/profiles/profiles.module';
     LoggerModule.forRoot({
       pinoHttp: {
         transport: process.env.NODE_ENV !== 'production'
-          ? { target: 'pino-pretty', options: { colorize: true } }
-          : undefined,
+          ? {
+              targets: [
+                { target: 'pino-pretty', options: { colorize: true } },
+                { target: 'pino/file', options: { destination: './app.log', mkdir: true } },
+              ],
+            }
+          : { target: 'pino/file', options: { destination: './app.log', mkdir: true } },
       },
     }),
     ConfigModule.forRoot({
