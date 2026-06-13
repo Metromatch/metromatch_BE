@@ -3,6 +3,7 @@ import { ProfileService } from '../services/profile.service';
 import { ProfilePreferenceService } from '../services/profile_preferences.service';
 import { ProfilePhotoService } from '../services/profile_photos.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { PaginationQueryDto } from '../dto/pagination-query.dto';
 
 @Controller('profiles')
 export class ProfilesController {
@@ -14,11 +15,10 @@ export class ProfilesController {
 
     @Get()
     async getProfiles(
-        @Query('page') pageStr: string,
-        @Query('limit') limitStr: string,
+        @Query() query: PaginationQueryDto,
     ) {
-        const page = parseInt(pageStr, 10) || 1;
-        const limit = parseInt(limitStr, 10) || 10;
+        const page = query.page || 1;
+        const limit = query.limit || 10;
 
         const [profiles, total] = await this.profileService.findProfilesWithPhotos(page, limit);
 
