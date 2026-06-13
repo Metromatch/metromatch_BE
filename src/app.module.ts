@@ -7,6 +7,7 @@ import { UserEntity } from './modules/users/entities/users.entity';
 import { UserSessionEntity } from './modules/auth/entities/user_session.entity';
 import { AuthModule } from './modules/auth/auth.module';
 import { MasterModule } from './modules/master/master.module';
+import { ProfilesModule } from './modules/profiles/profiles.module';
 
 @Module({
   imports: [
@@ -31,7 +32,8 @@ import { MasterModule } from './modules/master/master.module';
       },
     }),
     AuthModule,
-    MasterModule
+    MasterModule,
+    ProfilesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
