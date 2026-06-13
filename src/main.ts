@@ -1,14 +1,19 @@
 import { NestFactory } from '@nestjs/core';
 import { VersioningType, ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
 async function bootstrap() {
   try {
     const app = await NestFactory.create(AppModule).catch((error) => {
       throw error;
     });
+
+    app.use(helmet());
+    app.enableCors();
 
     app.setGlobalPrefix('api');
 
@@ -24,6 +29,7 @@ async function bootstrap() {
       }),
     );
 
+    app.useGlobalFilters(new HttpExceptionFilter());
     app.useGlobalInterceptors(new ResponseInterceptor());
 
     const config = new DocumentBuilder()
