@@ -14,7 +14,7 @@ export class UserSessionService {
     // }
 
     // finde by userId or deviceId
-    async findSessionByUserIdOrDeviceId(userId: string, deviceId: string) {
+    async findSessionByUserIdOrDeviceId(userId: string, deviceId?: string | null) {
         return this.sessionRepo.findByUserIdOrDeviceId(userId, deviceId)
     }
     async updateSession(id: string, data: Partial<UserSessionEntity>) {

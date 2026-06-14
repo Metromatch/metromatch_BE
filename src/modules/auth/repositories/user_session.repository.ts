@@ -20,7 +20,10 @@ export class UserSessionRepository {
         return this.userSessionRepository.findOne({ where: { id } });
     }
 
-    async findByUserIdOrDeviceId(userId: string, deviceId: string): Promise<UserSessionEntity | null> {
+    async findByUserIdOrDeviceId(userId: string, deviceId?: string | null): Promise<UserSessionEntity | null> {
+        if (!deviceId) {
+            return this.userSessionRepository.findOne({ where: { userId } });
+        }
         return this.userSessionRepository.findOne({ where: [{ userId }, { deviceId }] });
     }
 
