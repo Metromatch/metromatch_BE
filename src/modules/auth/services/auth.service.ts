@@ -74,6 +74,7 @@ export class AuthService {
         return {
             userId: user.id,
             authenticated: true,
+            onboardingCompleted: user.onboardingCompleted,
             ...tokens,
         }
     }
