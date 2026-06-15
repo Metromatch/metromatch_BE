@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { CommonHelper } from "../../../common/helpers/common";
-import { GenderEnum, ReligionEnum, DietEnum, DrinkingHabitsEnum, SmokingHabitsEnum, TravelFrequencyEnum, InterestedInEnum, RelationshipPreferenceEnum, TravelTimeRangeEnum } from "src/common/enums/common_enums";
-import { GenderLabel, ReligionLabel, DietLabel, DrinkingHabitsLabel, SmokingHabitsLabel, TravelFrequencyLabel, InterestedInLabel, RelationshipPreferenceLabel, TravelTimeRangeLabel } from "src/common/constants/enum_labels";
+import { GenderEnum, ReligionEnum, DietEnum, DrinkingHabitsEnum, SmokingHabitsEnum, TravelFrequencyEnum, InterestedInEnum, RelationshipPreferenceEnum, TravelTimeRangeEnum } from "../../../common/enums/common_enums";
+import { GenderLabel, ReligionLabel, DietLabel, DrinkingHabitsLabel, SmokingHabitsLabel, TravelFrequencyLabel, InterestedInLabel, RelationshipPreferenceLabel, TravelTimeRangeLabel } from "../../../common/constants/enum_labels";
 import { IMasterListEnumKeys } from "../master.interface";
 
 @Injectable()

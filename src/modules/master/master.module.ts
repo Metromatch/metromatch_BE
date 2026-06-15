@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { MasterlistController } from "./controllers/masterlist.controller";
 import { MasterlistService } from "./services/masterlist.service";
-import { CommonHelper } from "src/common/helpers/common";
+import { CommonHelper } from "../../common/helpers/common";
 
 @Module({
     imports: [],
