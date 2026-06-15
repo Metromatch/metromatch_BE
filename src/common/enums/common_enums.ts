@@ -23,21 +23,18 @@ enum DietEnum {
     EGGATARIAN = 'eggatarian',
     VEGAN = 'vegan',
     OTHER = 'other',
-    PREFER_NOT_TO_SAY = 'prefer_not_to_say',
 }
 
 enum DrinkingHabitsEnum {
     YES = 'yes',
     NO = 'no',
     OCCASIONAL = 'occasional',
-    PREFER_NOT_TO_SAY = 'prefer_not_to_say',
 }
 
 enum SmokingHabitsEnum {
     YES = 'yes',
     NO = 'no',
     OCCASIONAL = 'occasional',
-    PREFER_NOT_TO_SAY = 'prefer_not_to_say',
 }
 
 enum TravelFrequencyEnum {

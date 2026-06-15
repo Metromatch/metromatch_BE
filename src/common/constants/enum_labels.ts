@@ -21,31 +21,28 @@ const ReligionLabel = {
 
 const DietLabel = {
     [DietEnum.VEGETARIAN]: 'Vegetarian',
-    [DietEnum.NON_VEGETARIAN]: 'Non-vegetarian',
+    [DietEnum.NON_VEGETARIAN]: 'Non-Veg',
     [DietEnum.EGGATARIAN]: 'Eggatarian',
     [DietEnum.VEGAN]: 'Vegan',
     [DietEnum.OTHER]: 'Other',
-    [DietEnum.PREFER_NOT_TO_SAY]: 'Prefer not to say',
 }
 
 const DrinkingHabitsLabel = {
     [DrinkingHabitsEnum.YES]: 'Yes',
     [DrinkingHabitsEnum.NO]: 'No',
     [DrinkingHabitsEnum.OCCASIONAL]: 'Occasional',
-    [DrinkingHabitsEnum.PREFER_NOT_TO_SAY]: 'Prefer not to say',
 }
 
 const SmokingHabitsLabel = {
     [SmokingHabitsEnum.YES]: 'Yes',
     [SmokingHabitsEnum.NO]: 'No',
     [SmokingHabitsEnum.OCCASIONAL]: 'Occasional',
-    [SmokingHabitsEnum.PREFER_NOT_TO_SAY]: 'Prefer not to say',
 }
 
 const TravelFrequencyLabel = {
     [TravelFrequencyEnum.DAILY_COMMUTER]: 'Daily commuter',
     [TravelFrequencyEnum.FEW_TIMES_A_WEEK]: 'Few times a week',
-    [TravelFrequencyEnum.OCCASIONALLY]: 'Occasionally',
+    [TravelFrequencyEnum.OCCASIONALLY]: 'Occasional',
 }
 
 const InterestedInLabel = {

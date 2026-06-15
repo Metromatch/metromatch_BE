@@ -3,6 +3,7 @@ import { CommonHelper } from "../../../common/helpers/common";
 import { GenderEnum, ReligionEnum, DietEnum, DrinkingHabitsEnum, SmokingHabitsEnum, TravelFrequencyEnum, InterestedInEnum, RelationshipPreferenceEnum, TravelTimeRangeEnum } from "../../../common/enums/common_enums";
 import { GenderLabel, ReligionLabel, DietLabel, DrinkingHabitsLabel, SmokingHabitsLabel, TravelFrequencyLabel, InterestedInLabel, RelationshipPreferenceLabel, TravelTimeRangeLabel } from "../../../common/constants/enum_labels";
 import { IMasterListEnumKeys } from "../master.interface";
+import { DietConfig } from "src/common/constants/enum_option_config";
 
 @Injectable()
 export class MasterlistService {
@@ -19,7 +20,7 @@ export class MasterlistService {
     }
 
     getDietList() {
-        return this.commonHelper.getOptions(DietEnum, DietLabel);
+        return this.commonHelper.getOptions(DietEnum, DietLabel, DietConfig);
     }
 
     getDrinkingHabitsList() {
