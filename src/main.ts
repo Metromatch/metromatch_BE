@@ -69,6 +69,10 @@ if (!isVercel) {
 }
 
 export default async (req: any, res: any) => {
+  // Vercel sometimes strips the /api prefix from the request URL
+  if (req.url && !req.url.startsWith('/api')) {
+    req.url = `/api${req.url.startsWith('/') ? '' : '/'}${req.url}`;
+  }
   const server = await bootstrap();
   return server(req, res);
 };
