@@ -22,7 +22,7 @@ import { ProfilesModule } from './modules/profiles/profiles.module';
                 { target: 'pino/file', options: { destination: './app.log', mkdir: true } },
               ],
             }
-          : { target: 'pino/file', options: { destination: './app.log', mkdir: true } },
+          : undefined,
       },
     }),
     ConfigModule.forRoot({

@@ -7,8 +7,10 @@ import { AppModule } from './app.module';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
+let cachedServer: any;
+
 async function bootstrap() {
-  try {
+  if (!cachedServer) {
     const app = await NestFactory.create(AppModule, { bufferLogs: true }).catch((error) => {
       throw error;
     });
@@ -44,12 +46,29 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api/swagger', app, document);
 
-    await app.listen(process.env.PORT ?? 3000).catch((error) => {
-      throw error;
-    });
-  } catch (error) {
-    console.log(error);
-    process.exit(1);
+    await app.init();
+    cachedServer = app.getHttpAdapter().getInstance();
   }
+  return cachedServer;
 }
-void bootstrap();
+
+const isVercel = process.env.VERCEL === '1';
+
+if (!isVercel) {
+  bootstrap()
+    .then((server) => {
+      const port = process.env.PORT ?? 3000;
+      server.listen(port, () => {
+        console.log(`Local server listening on port ${port}`);
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+      process.exit(1);
+    });
+}
+
+export default async (req: any, res: any) => {
+  const server = await bootstrap();
+  return server(req, res);
+};
