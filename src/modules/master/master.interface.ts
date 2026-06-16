@@ -8,4 +8,5 @@ export interface IMasterListEnumKeys {
     interestedIn: 'interestedIn',
     relationshipPreference: 'relationshipPreference',
     travelTimeRange: 'travelTimeRange',
+    height: 'height'
 }

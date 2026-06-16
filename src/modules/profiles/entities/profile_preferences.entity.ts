@@ -9,9 +9,6 @@ export class ProfilePreference {
     userId: string
 
     @Column({ nullable: true })
-    lookingFor: string
-
-    @Column({ nullable: true })
     minAge: number
 
     @Column({ nullable: true })

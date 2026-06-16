@@ -8,11 +8,11 @@ export class Profile {
     @Column({ unique: true })
     userId: string
 
-    @Column({ nullable: true })
+    @Column({ nullable: false })
     name: string
 
-    @Column({ nullable: true })
-    dob: Date
+    @Column({ nullable: false })
+    dob: string
 
     @Column({ nullable: true })
     drinkingHabits: string
@@ -37,6 +37,9 @@ export class Profile {
 
     @Column({ nullable: true })
     travelFrequency: string
+
+    @Column({ nullable: true })
+    relationshipPreference: string
 
     @Column('text', { nullable: true, array: true, default: '{}' })
     travelTimeSlots: string[]

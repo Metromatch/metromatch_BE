@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { ProfileRepository } from '../repositories/profile.repository';
 import { Profile } from '../entities/profils.entity';
 
@@ -20,6 +20,14 @@ export class ProfileService {
 
     async updateById(id: string, data: Partial<Profile>): Promise<any> {
         return this.profileRepository.updateById(id, data);
+    }
+
+    async updateByUserId(userId: string, data: Partial<Profile>): Promise<any> {
+        const profile = await this.profileRepository.updateByUserId(userId, data);
+        if (!profile) {
+            throw new NotFoundException(`Profile with user ID ${userId} not found`);
+        }
+        return profile;
     }
 
     async findProfilesWithPhotos(page: number, limit: number): Promise<[Profile[], number]> {

@@ -1,4 +1,4 @@
-import { DietEnum, DrinkingHabitsEnum, GenderEnum, InterestedInEnum, RelationshipPreferenceEnum, ReligionEnum, SmokingHabitsEnum, TravelFrequencyEnum, TravelTimeRangeEnum } from "../enums/common_enums"
+import { DietEnum, DrinkingHabitsEnum, HeightEnum, GenderEnum, InterestedInEnum, RelationshipPreferenceEnum, ReligionEnum, SmokingHabitsEnum, TravelFrequencyEnum, TravelTimeRangeEnum } from "../enums/common_enums"
 
 const GenderLabel = {
     [GenderEnum.MALE]: 'Male',
@@ -66,6 +66,35 @@ const TravelTimeRangeLabel = {
     [TravelTimeRangeEnum['After 9 PM']]: 'After 9 PM',
 }
 
+const HeightLabel = {
+    [HeightEnum.FOUR_FOOT_TEN]: "4'10'",
+    [HeightEnum.FOUR_FOOT_ELEVEN]: "4'11'",
+    [HeightEnum.FIVE_FOOT_0]: "5'0'",
+    [HeightEnum.FIVE_FOOT_1]: "5'1'",
+    [HeightEnum.FIVE_FOOT_2]: "5'2'",
+    [HeightEnum.FIVE_FOOT_3]: "5'3'",
+    [HeightEnum.FIVE_FOOT_4]: "5'4'",
+    [HeightEnum.FIVE_FOOT_5]: "5'5'",
+    [HeightEnum.FIVE_FOOT_6]: "5'6'",
+    [HeightEnum.FIVE_FOOT_7]: "5'7'",
+    [HeightEnum.FIVE_FOOT_8]: "5'8'",
+    [HeightEnum.FIVE_FOOT_9]: "5'9'",
+    [HeightEnum.FIVE_FOOT_10]: "5'10'",
+    [HeightEnum.FIVE_FOOT_11]: "5'11'",
+    [HeightEnum.SIX_FOOT_0]: "6'0'",
+    [HeightEnum.SIX_FOOT_1]: "6'1'",
+    [HeightEnum.SIX_FOOT_2]: "6'2'",
+    [HeightEnum.SIX_FOOT_3]: "6'3'",
+    [HeightEnum.SIX_FOOT_4]: "6'4'",
+    [HeightEnum.SIX_FOOT_5]: "6'5'",
+    [HeightEnum.SIX_FOOT_6]: "6'6'",
+    [HeightEnum.SIX_FOOT_7]: "6'7'",
+    [HeightEnum.SIX_FOOT_8]: "6'8'",
+    [HeightEnum.SIX_FOOT_9]: "6'9'",
+    [HeightEnum.SIX_FOOT_10]: "6'10'",
+    [HeightEnum.SIX_FOOT_11]: "6'11'",
+    [HeightEnum.SEVEN_FOOT_0]: "7'0'",
+    [HeightEnum.SEVEN_PLUS]: "7'+'",
+}
 
-
-export { GenderLabel, ReligionLabel, DietLabel, DrinkingHabitsLabel, SmokingHabitsLabel, TravelFrequencyLabel, InterestedInLabel, RelationshipPreferenceLabel, TravelTimeRangeLabel }
+export { GenderLabel, ReligionLabel, DietLabel, DrinkingHabitsLabel, SmokingHabitsLabel, TravelFrequencyLabel, InterestedInLabel, RelationshipPreferenceLabel, TravelTimeRangeLabel, HeightLabel }

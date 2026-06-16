@@ -64,6 +64,37 @@ enum TravelTimeRangeEnum {
     'After 9 PM' = 'After_9_PM',
 }
 
+enum HeightEnum {
+    FOUR_FOOT_TEN = '4_10',
+    FOUR_FOOT_ELEVEN = '4_11',
+    FIVE_FOOT_0 = '5_0',
+    FIVE_FOOT_1 = '5_1',
+    FIVE_FOOT_2 = '5_2',
+    FIVE_FOOT_3 = '5_3',
+    FIVE_FOOT_4 = '5_4',
+    FIVE_FOOT_5 = '5_5',
+    FIVE_FOOT_6 = '5_6',
+    FIVE_FOOT_7 = '5_7',
+    FIVE_FOOT_8 = '5_8',
+    FIVE_FOOT_9 = '5_9',
+    FIVE_FOOT_10 = '5_10',
+    FIVE_FOOT_11 = '5_11',
+    SIX_FOOT_0 = '6_0',
+    SIX_FOOT_1 = '6_1',
+    SIX_FOOT_2 = '6_2',
+    SIX_FOOT_3 = '6_3',
+    SIX_FOOT_4 = '6_4',
+    SIX_FOOT_5 = '6_5',
+    SIX_FOOT_6 = '6_6',
+    SIX_FOOT_7 = '6_7',
+    SIX_FOOT_8 = '6_8',
+    SIX_FOOT_9 = '6_9',
+    SIX_FOOT_10 = '6_10',
+    SIX_FOOT_11 = '6_11',
+    SEVEN_FOOT_0 = '7_0',
+    SEVEN_PLUS = '7+',
+}
+
 // enum PartnerDiet {
 //     VEGETARIAN = 'vegetarian',
 //     NON_VEGETARIAN = 'non_vegetarian',
@@ -94,4 +125,4 @@ enum TravelTimeRangeEnum {
 // }
 
 
-export { GenderEnum, ReligionEnum, DietEnum, DrinkingHabitsEnum, SmokingHabitsEnum, TravelFrequencyEnum, InterestedInEnum, RelationshipPreferenceEnum, TravelTimeRangeEnum }
+export { GenderEnum, ReligionEnum, DietEnum, DrinkingHabitsEnum, SmokingHabitsEnum, TravelFrequencyEnum, InterestedInEnum, RelationshipPreferenceEnum, TravelTimeRangeEnum, HeightEnum }

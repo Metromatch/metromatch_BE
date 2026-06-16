@@ -1,10 +1,12 @@
-import { Controller, Get, Query, Request, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Put, Body, Query, Request, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ProfileService } from '../services/profile.service';
 import { ProfilePreferenceService } from '../services/profile_preferences.service';
 import { ProfilePhotoService } from '../services/profile_photos.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { PaginationQueryDto } from '../dto/pagination-query.dto';
+import { CreateProfileDto } from '../dto/create-profile.dto';
+import { UpdateProfileDto } from '../dto/update-profile.dto';
 
 @ApiTags('profiles')
 @Controller('profiles')
@@ -55,5 +57,32 @@ export class ProfilesController {
             preferences,
             photos,
         };
+    }
+
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @Post('me')
+    async createProfile(@Request() req: any, @Body() body: CreateProfileDto) {
+        const userId = req.user?.sub || req.user?.userId;
+        if (!userId) {
+            throw new UnauthorizedException('User not authenticated');
+        }
+
+        return this.profileService.create({
+            ...body,
+            userId,
+        });
+    }
+
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @Put('me')
+    async updateProfile(@Request() req: any, @Body() body: UpdateProfileDto) {
+        const userId = req.user?.sub || req.user?.userId;
+        if (!userId) {
+            throw new UnauthorizedException('User not authenticated');
+        }
+
+        return this.profileService.updateByUserId(userId, body);
     }
 }

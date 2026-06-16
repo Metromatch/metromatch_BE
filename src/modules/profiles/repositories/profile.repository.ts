@@ -28,6 +28,10 @@ export class ProfileRepository {
         return this.repository.update({ id }, data);
     }
 
+    async updateByUserId(userId: string, data: Partial<Profile>): Promise<any> {
+        return this.repository.update({ userId }, data);
+    }
+
     async findProfilesWithPhotos(skip: number, take: number): Promise<[Profile[], number]> {
         return this.repository.createQueryBuilder('profile')
             .leftJoinAndMapMany(

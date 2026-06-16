@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { CommonHelper } from "../../../common/helpers/common";
-import { GenderEnum, ReligionEnum, DietEnum, DrinkingHabitsEnum, SmokingHabitsEnum, TravelFrequencyEnum, InterestedInEnum, RelationshipPreferenceEnum, TravelTimeRangeEnum } from "../../../common/enums/common_enums";
-import { GenderLabel, ReligionLabel, DietLabel, DrinkingHabitsLabel, SmokingHabitsLabel, TravelFrequencyLabel, InterestedInLabel, RelationshipPreferenceLabel, TravelTimeRangeLabel } from "../../../common/constants/enum_labels";
+import { GenderEnum, ReligionEnum, DietEnum, DrinkingHabitsEnum, SmokingHabitsEnum, TravelFrequencyEnum, InterestedInEnum, RelationshipPreferenceEnum, TravelTimeRangeEnum, HeightEnum } from "../../../common/enums/common_enums";
+import { GenderLabel, ReligionLabel, DietLabel, DrinkingHabitsLabel, SmokingHabitsLabel, TravelFrequencyLabel, InterestedInLabel, RelationshipPreferenceLabel, TravelTimeRangeLabel, HeightLabel } from "../../../common/constants/enum_labels";
 import { IMasterListEnumKeys } from "../master.interface";
 import { DietConfig } from "../../../common/constants/enum_option_config";
 
@@ -47,6 +47,10 @@ export class MasterlistService {
         return this.commonHelper.getOptions(TravelTimeRangeEnum, TravelTimeRangeLabel);
     }
 
+    getHeightList() {
+        return this.commonHelper.getOptions(HeightEnum, HeightLabel);
+    }
+
     getMasterList(key: keyof IMasterListEnumKeys) {
         switch (key) {
             case 'gender':
@@ -67,6 +71,8 @@ export class MasterlistService {
                 return this.getRelationshipPreferenceList();
             case 'travelTimeRange':
                 return this.getTravelTimeRangeList();
+            case 'height':
+                return this.getHeightList();
             default:
                 return [];
         }
