@@ -20,17 +20,70 @@ export class CreateProfileDto {
     @IsEnum(DrinkingHabitsEnum)
     drinkingHabits?: DrinkingHabitsEnum;
 
-
     @ApiPropertyOptional()
     @IsOptional()
     @IsEnum(SmokingHabitsEnum)
     smokingHabits?: SmokingHabitsEnum;
 
-
     @ApiPropertyOptional()
     @IsOptional()
     @IsEnum(ReligionEnum)
     religion?: ReligionEnum;
+
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsString()
+    profession?: string;
+
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsString()
+    lookingFor?: string;
+
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsString()
+    interestedIn?: string;
+
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsString()
+    prefMinAge?: string;
+
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsString()
+    prefMaxAge?: string;
+
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsString()
+    prefMinHeight?: string;
+
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsString()
+    prefMaxHeight?: string;
+
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsString()
+    prefReligion?: string;
+
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsString()
+    prefDiet?: string;
+
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsString()
+    prefDrinking?: string;
+
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsString()
+    prefSmoking?: string;
 
     @ApiPropertyOptional()
     @IsOptional()

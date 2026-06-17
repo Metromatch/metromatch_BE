@@ -15,22 +15,22 @@ export class Profile {
     dob: string
 
     @Column({ nullable: true })
+    gender: string
+
+    @Column({ nullable: true })
     drinkingHabits: string
 
     @Column({ nullable: true })
     smokingHabits: string
 
     @Column({ nullable: true })
-    gender: string
+    profession: string
 
     @Column({ nullable: true })
     religion: string
 
     @Column({ nullable: true })
-    heightCm: number
-
-    @Column({ nullable: true })
-    weightKg: number
+    height: string
 
     @Column({ nullable: true })
     diet: string

@@ -15,10 +15,10 @@ export class ProfilePreference {
     maxAge: number
 
     @Column({ nullable: true })
-    minHeightCm: number
+    minHeight: string
 
     @Column({ nullable: true })
-    maxHeightCm: number
+    maxHeight: string
 
     @Column({ nullable: true })
     religion: string

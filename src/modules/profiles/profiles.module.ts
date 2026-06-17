@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { Profile } from './entities/profils.entity';
+import { Profile } from './entities/profiles.entity';
 import { ProfilePreference } from './entities/profile_preferences.entity';
 import { ProfilePhoto } from './entities/profile_photos.entity';
 
@@ -34,4 +34,4 @@ import { ProfilesController } from './controllers/profiles.controller';
         ProfilePhotoService,
     ]
 })
-export class ProfilesModule {}
+export class ProfilesModule { }

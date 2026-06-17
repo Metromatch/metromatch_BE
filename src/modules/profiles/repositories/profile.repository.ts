@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { Profile } from "../entities/profils.entity";
+import { Profile } from "../entities/profiles.entity";
 import { ProfilePhoto } from "../entities/profile_photos.entity";
 
 @Injectable()
@@ -44,5 +44,9 @@ export class ProfileRepository {
             .skip(skip)
             .take(take)
             .getManyAndCount();
+    }
+
+    async deleteByUserId(userId: string): Promise<any> {
+        return this.repository.delete({ userId });
     }
 }

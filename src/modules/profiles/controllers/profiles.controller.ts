@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Body, Query, Request, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Put, Body, Query, Request, UnauthorizedException, UseGuards, Delete } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ProfileService } from '../services/profile.service';
 import { ProfilePreferenceService } from '../services/profile_preferences.service';
@@ -68,10 +68,25 @@ export class ProfilesController {
             throw new UnauthorizedException('User not authenticated');
         }
 
-        return this.profileService.create({
-            ...body,
-            userId,
-        });
+        const [profile, preferences, photos] = await Promise.all([
+            this.profileService.create({
+                ...body,
+                userId,
+            }),
+            this.profilePreferenceService.create({
+                ...body,
+                userId,
+            }),
+            this.profilePhotoService.create({
+                ...body,
+                userId,
+            })
+        ])
+        return {
+            profile,
+            preferences,
+            photos,
+        }
     }
 
     @ApiBearerAuth()
@@ -84,5 +99,18 @@ export class ProfilesController {
         }
 
         return this.profileService.updateByUserId(userId, body);
+    }
+
+    //delete profile
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @Delete('me')
+    async deleteProfile(@Request() req: any) {
+        const userId = req.user?.sub || req.user?.userId;
+        if (!userId) {
+            throw new UnauthorizedException('User not authenticated');
+        }
+
+        return this.profileService.deleteByUserId(userId);
     }
 }

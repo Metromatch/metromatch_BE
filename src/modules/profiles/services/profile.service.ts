@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ProfileRepository } from '../repositories/profile.repository';
-import { Profile } from '../entities/profils.entity';
+import { Profile } from '../entities/profiles.entity';
 
 @Injectable()
 export class ProfileService {
@@ -29,7 +29,13 @@ export class ProfileService {
         }
         return profile;
     }
-
+    async deleteByUserId(userId: string): Promise<any> {
+        const [profile] = await this.profileRepository.deleteByUserId(userId);
+        if (!profile) {
+            throw new NotFoundException(`Profile with user ID ${userId} not found`);
+        }
+        return profile;
+    }
     async findProfilesWithPhotos(page: number, limit: number): Promise<[Profile[], number]> {
         const skip = (page - 1) * limit;
         return this.profileRepository.findProfilesWithPhotos(skip, limit);
