@@ -41,6 +41,9 @@ export class Profile {
     @Column({ nullable: true })
     relationshipPreference: string
 
+    @Column({ nullable: true })
+    interestedIn: string
+
     @Column('text', { nullable: true, array: true, default: '{}' })
     travelTimeSlots: string[]
 
