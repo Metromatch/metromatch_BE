@@ -4,6 +4,7 @@ import { ProfileService } from '../services/profile.service';
 import { ProfilePreferenceService } from '../services/profile_preferences.service';
 import { ProfilePhotoService } from '../services/profile_photos.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { UsersService } from '../../users/services/users.service';
 import { PaginationQueryDto } from '../dto/pagination-query.dto';
 import { CreateProfileDto } from '../dto/create-profile.dto';
 import { UpdateProfileDto } from '../dto/update-profile.dto';
@@ -15,6 +16,7 @@ export class ProfilesController {
         private readonly profileService: ProfileService,
         private readonly profilePreferenceService: ProfilePreferenceService,
         private readonly profilePhotoService: ProfilePhotoService,
+        private readonly usersService: UsersService,
     ) { }
 
     @Get()
@@ -82,6 +84,9 @@ export class ProfilesController {
                 userId,
             })
         ])
+        
+        await this.usersService.markOnboardingCompleted(userId);
+
         return {
             profile,
             preferences,

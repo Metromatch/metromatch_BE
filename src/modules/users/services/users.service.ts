@@ -22,4 +22,8 @@ export class UsersService {
         }
         return this.usersRepository.create(data);
     }
+
+    async markOnboardingCompleted(userId: string): Promise<any> {
+        return this.usersRepository.updateById(userId, { onboardingCompleted: true });
+    }
 }

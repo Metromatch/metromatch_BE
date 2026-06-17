@@ -15,9 +15,12 @@ import { ProfilePhotoService } from './services/profile_photos.service';
 
 import { ProfilesController } from './controllers/profiles.controller';
 
+import { AuthModule } from '../auth/auth.module';
+
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Profile, ProfilePreference, ProfilePhoto])
+        TypeOrmModule.forFeature([Profile, ProfilePreference, ProfilePhoto]),
+        AuthModule,
     ],
     controllers: [ProfilesController],
     providers: [
