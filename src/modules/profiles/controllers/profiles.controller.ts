@@ -84,8 +84,8 @@ export class ProfilesController {
                 userId,
             })
         ])
-        
-        await this.usersService.markOnboardingCompleted(userId);
+
+        this.usersService.markOnboardingCompleted(userId);
 
         return {
             profile,

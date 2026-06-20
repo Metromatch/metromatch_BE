@@ -10,6 +10,11 @@ import { UserSessionEntity } from './modules/auth/entities/user_session.entity';
 import { AuthModule } from './modules/auth/auth.module';
 import { MasterModule } from './modules/master/master.module';
 import { ProfilesModule } from './modules/profiles/profiles.module';
+import { PresenceModule } from './modules/presence/presence.module';
+import { DiscoveryModule } from './modules/discovery/discovery.module';
+import { SwipesModule } from './modules/swipes/swipes.module';
+import { EncountersModule } from './modules/encounters/encounters.module';
+import { MatchesModule } from './modules/matches/matches.module';
 
 @Module({
   imports: [
@@ -58,6 +63,11 @@ import { ProfilesModule } from './modules/profiles/profiles.module';
     AuthModule,
     MasterModule,
     ProfilesModule,
+    PresenceModule,
+    DiscoveryModule,
+    SwipesModule,
+    EncountersModule,
+    MatchesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

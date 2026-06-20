@@ -1,13 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { ProfilePreferenceRepository } from '../repositories/profile_preferences.repository';
 import { ProfilePreference } from '../entities/profile_preferences.entity';
+import { CreateProfileDto } from '../dto/create-profile.dto';
 
 @Injectable()
 export class ProfilePreferenceService {
-    constructor(private readonly profilePreferenceRepository: ProfilePreferenceRepository) {}
+    constructor(private readonly profilePreferenceRepository: ProfilePreferenceRepository) { }
 
-    async create(data: Partial<ProfilePreference>): Promise<ProfilePreference> {
-        return this.profilePreferenceRepository.create(data);
+    async create(data: CreateProfileDto & { userId: string }): Promise<ProfilePreference> {
+        const formattedPayload = {
+            userId: data.userId,
+            minAge: data.prefMinAge,
+            maxAge: data.prefMaxAge,
+            minHeight: data.prefMinHeight,
+            maxHeight: data.prefMaxHeight,
+            religion: data.prefReligion,
+            diet: data.prefDiet,
+            drinkingHabits: data.prefDrinking,
+            smokingHabits: data.prefSmoking,
+        }
+        return this.profilePreferenceRepository.create(formattedPayload as Partial<ProfilePreference>);
     }
 
     async findById(id: string): Promise<ProfilePreference | null> {

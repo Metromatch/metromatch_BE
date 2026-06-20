@@ -47,6 +47,12 @@ export class CreateProfileDto {
 
     @ApiPropertyOptional()
     @IsOptional()
+    @IsArray()
+    @IsString({ each: true })
+    vibe?: string[];
+
+    @ApiPropertyOptional()
+    @IsOptional()
     @IsString()
     prefMinAge?: string;
 
