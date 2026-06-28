@@ -15,6 +15,7 @@ import { DiscoveryModule } from './modules/discovery/discovery.module';
 import { SwipesModule } from './modules/swipes/swipes.module';
 import { EncountersModule } from './modules/encounters/encounters.module';
 import { MatchesModule } from './modules/matches/matches.module';
+import { ChatModule } from './modules/chat/chat.module';
 
 @Module({
   imports: [
@@ -41,6 +42,11 @@ import { MatchesModule } from './modules/matches/matches.module';
         DB_PASSWORD: Joi.string().required(),
         DB_DATABASE: Joi.string().required(),
         JWT_SECRET: Joi.string().required(),
+        TWILIO_ACCOUNT_SID: Joi.string().optional().allow(''),
+        TWILIO_AUTH_TOKEN: Joi.string().optional().allow(''),
+        TWILIO_API_KEY_SID: Joi.string().optional().allow(''),
+        TWILIO_API_KEY_SECRET: Joi.string().optional().allow(''),
+        TWILIO_CONVERSATIONS_SERVICE_SID: Joi.string().optional().allow(''),
       }),
     }),
     TypeOrmModule.forRootAsync({
@@ -68,9 +74,9 @@ import { MatchesModule } from './modules/matches/matches.module';
     SwipesModule,
     EncountersModule,
     MatchesModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule { }
-
