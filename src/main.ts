@@ -17,8 +17,16 @@ async function bootstrap() {
 
     app.useLogger(app.get(Logger));
 
-    app.use(helmet());
-    app.enableCors();
+    app.enableCors({
+      origin: '*',
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Accept', 'Authorization'],
+      credentials: false,
+    });
+
+    app.use(helmet({
+      crossOriginResourcePolicy: { policy: 'cross-origin' },
+    }));
 
     app.setGlobalPrefix('api');
 
