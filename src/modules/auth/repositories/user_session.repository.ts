@@ -38,4 +38,8 @@ export class UserSessionRepository {
     async updateById(id: string, data: Partial<UserSessionEntity>): Promise<any> {
         return this.userSessionRepository.update({ id }, data);
     }
+
+    async deleteByUserId(userId: string): Promise<void> {
+        await this.userSessionRepository.delete({ userId });
+    }
 }

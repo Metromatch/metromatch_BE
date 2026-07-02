@@ -78,4 +78,9 @@ export class AuthService {
             ...tokens,
         }
     }
+
+    async logout(userId: string): Promise<{ message: string }> {
+        await this.sessionService.deleteSessionByUserId(userId)
+        return { message: 'Logged out successfully' }
+    }
 }

@@ -35,5 +35,9 @@ export class UserSessionService {
                 .toDate(),
         })
     }
+
+    async deleteSessionByUserId(userId: string): Promise<void> {
+        return this.sessionRepo.deleteByUserId(userId)
+    }
 }
 
