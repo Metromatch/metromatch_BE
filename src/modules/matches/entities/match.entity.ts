@@ -27,6 +27,6 @@ export class Match {
     @Column({ type: 'timestamp', nullable: true })
     lastMessageAt: Date | null;
 
-    @Column({ nullable: true })
+    @Column({ type: 'varchar', nullable: true })
     twilioConversationSid: string | null;
 }
