@@ -51,7 +51,7 @@ export class SwipeRepository {
     /** Returns every userId that `fromUserId` has already swiped on (any direction). */
     async findSwipedUserIds(fromUserId: string): Promise<string[]> {
         const rows = await this.repository.find({
-            select: ['toUserId'],
+            select: { toUserId: true },
             where: { fromUserId },
         });
         return rows.map((r) => r.toUserId);
