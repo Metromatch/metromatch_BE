@@ -13,14 +13,13 @@ export class PresenceService {
         userId: string,
         dto: UpdatePresenceDto,
     ): Promise<UserPresence> {
-        const pointWkt = `SRID=4326;POINT(${dto.longitude} ${dto.latitude})`;
         return this.userPresenceRepository.upsert(userId, {
             latitude: dto.latitude,
             longitude: dto.longitude,
-            location: () => `ST_GeogFromText('${pointWkt}')` as any,
             online: dto.online ?? true,
         });
     }
+
 
     async setOffline(userId: string): Promise<void> {
         return this.userPresenceRepository.setOffline(userId);

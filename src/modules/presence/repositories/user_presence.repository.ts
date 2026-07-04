@@ -11,18 +11,35 @@ export class UserPresenceRepository {
         private readonly dataSource: DataSource,
     ) { }
 
+    /**
+     * Upsert a user's presence row.
+     * Uses raw SQL so that the PostGIS geography column is written via
+     * ST_GeogFromText — TypeORM's .update() cannot handle function expressions
+     * and silently skips computed columns, leaving `location` as NULL.
+     */
     async upsert(
         userId: string,
         data: Partial<UserPresence>,
     ): Promise<UserPresence> {
-        const existing = await this.repository.findOne({ where: { userId } });
-        if (existing) {
-            return await this.repository.update({ userId }, data) as any;
-            // return a as UserPresence;
-            // return this.repository.findOne({ where: { userId } }) as Promise<UserPresence>;
-        }
-        const entity = this.repository.create({ userId, ...data });
-        return this.repository.save(entity);
+        const { latitude, longitude, online = true } = data as any;
+
+        const pointWkt = `SRID=4326;POINT(${longitude} ${latitude})`;
+
+        await this.dataSource.query(
+            `
+            INSERT INTO user_presence (user_id, latitude, longitude, location, online, updated_at)
+            VALUES ($1, $2, $3, ST_GeogFromText($4), $5, NOW())
+            ON CONFLICT (user_id) DO UPDATE
+                SET latitude    = EXCLUDED.latitude,
+                    longitude   = EXCLUDED.longitude,
+                    location    = EXCLUDED.location,
+                    online      = EXCLUDED.online,
+                    updated_at  = NOW()
+            `,
+            [userId, latitude, longitude, pointWkt, online],
+        );
+
+        return this.repository.findOne({ where: { userId } }) as Promise<UserPresence>;
     }
 
     async findByUserId(userId: string): Promise<UserPresence | null> {
