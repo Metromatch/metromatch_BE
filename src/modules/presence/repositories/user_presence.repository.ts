@@ -27,14 +27,14 @@ export class UserPresenceRepository {
 
         await this.dataSource.query(
             `
-            INSERT INTO user_presence (user_id, latitude, longitude, location, online, updated_at)
+            INSERT INTO user_presence ("userId", latitude, longitude, location, online, "updatedAt")
             VALUES ($1, $2, $3, ST_GeogFromText($4), $5, NOW())
-            ON CONFLICT (user_id) DO UPDATE
-                SET latitude    = EXCLUDED.latitude,
-                    longitude   = EXCLUDED.longitude,
-                    location    = EXCLUDED.location,
-                    online      = EXCLUDED.online,
-                    updated_at  = NOW()
+            ON CONFLICT ("userId") DO UPDATE
+                SET latitude     = EXCLUDED.latitude,
+                    longitude    = EXCLUDED.longitude,
+                    location     = EXCLUDED.location,
+                    online       = EXCLUDED.online,
+                    "updatedAt" = NOW()
             `,
             [userId, latitude, longitude, pointWkt, online],
         );
@@ -61,7 +61,7 @@ export class UserPresenceRepository {
         const result = await this.dataSource.query(
             `
             SELECT
-                up.user_id          AS "userId",
+                up."userId"         AS "userId",
                 up.latitude         AS latitude,
                 up.longitude        AS longitude,
                 ST_Distance(
@@ -71,7 +71,7 @@ export class UserPresenceRepository {
             FROM user_presence up
             WHERE
                 up.online = true
-                AND up.user_id != $3
+                AND up."userId" != $3
                 AND up.location IS NOT NULL
                 AND ST_DWithin(
                     up.location,
