@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PresenceService } from '../../presence/services/presence.service';
+import { SwipeService } from '../../swipes/services/swipe.service';
 import { Profile } from '../../profiles/entities/profiles.entity';
 import { DiscoveryQueryDto } from '../dto/discovery-query.dto';
 
@@ -9,6 +10,7 @@ import { DiscoveryQueryDto } from '../dto/discovery-query.dto';
 export class DiscoveryService {
     constructor(
         private readonly presenceService: PresenceService,
+        private readonly swipeService: SwipeService,
         @InjectRepository(Profile)
         private readonly profileRepository: Repository<Profile>,
     ) {}
@@ -42,7 +44,20 @@ export class DiscoveryService {
             };
         }
 
-        const nearbyUserIds = nearbyPresences.map((p) => p.userId);
+        // Exclude users the caller has already swiped on (any direction)
+        const alreadySwiped = new Set(await this.swipeService.getSwipedUserIds(userId));
+
+        const nearbyUserIds = nearbyPresences
+            .map((p) => p.userId)
+            .filter((id) => !alreadySwiped.has(id));
+
+        if (nearbyUserIds.length === 0) {
+            return {
+                data: [],
+                meta: { total: 0, page, limit, totalPages: 0 },
+            };
+        }
+
         const distanceMap = new Map(
             nearbyPresences.map((p) => [p.userId, Math.round(p.distanceMeters)]),
         );

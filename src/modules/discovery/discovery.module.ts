@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PresenceModule } from '../presence/presence.module';
+import { SwipesModule } from '../swipes/swipes.module';
 import { Profile } from '../profiles/entities/profiles.entity';
 import { DiscoveryService } from './services/discovery.service';
 import { DiscoveryController } from './controllers/discovery.controller';
@@ -10,6 +11,7 @@ import { AuthModule } from '../auth/auth.module';
     imports: [
         TypeOrmModule.forFeature([Profile]),
         PresenceModule,
+        SwipesModule,
         AuthModule,
     ],
     controllers: [DiscoveryController],

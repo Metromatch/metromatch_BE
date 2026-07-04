@@ -59,4 +59,10 @@ export class SwipeService {
     async getSwipesReceived(userId: string): Promise<Swipe[]> {
         return this.swipeRepository.findReceivedByUser(userId);
     }
+
+    /** All userIds the given user has already swiped on — used by discovery to exclude them. */
+    async getSwipedUserIds(userId: string): Promise<string[]> {
+        return this.swipeRepository.findSwipedUserIds(userId);
+    }
 }
+
