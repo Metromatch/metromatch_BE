@@ -1,4 +1,4 @@
-import { DietEnum, DrinkingHabitsEnum, HeightEnum, GenderEnum, InterestedInEnum, RelationshipPreferenceEnum, ReligionEnum, SmokingHabitsEnum, TravelFrequencyEnum, TravelTimeRangeEnum } from "../enums/common_enums"
+import { DietEnum, DrinkingHabitsEnum, HeightEnum, GenderEnum, InterestedInEnum, RelationshipPreferenceEnum, ReligionEnum, SmokingHabitsEnum, TravelFrequencyEnum, TravelTimeRangeEnum, VibeEnum } from "../enums/common_enums"
 
 const GenderLabel = {
     [GenderEnum.MALE]: 'Male',
@@ -97,4 +97,31 @@ const HeightLabel = {
     [HeightEnum.SEVEN_PLUS]: "7'+'",
 }
 
-export { GenderLabel, ReligionLabel, DietLabel, DrinkingHabitsLabel, SmokingHabitsLabel, TravelFrequencyLabel, InterestedInLabel, RelationshipPreferenceLabel, TravelTimeRangeLabel, HeightLabel }
+const VibeLabel = {
+    [VibeEnum.TABLE_TENNIS]: 'Table Tennis',
+    [VibeEnum.MUSIC]: 'Music',
+    [VibeEnum.READING]: 'Reading',
+    [VibeEnum.GUITAR]: 'Guitar',
+    [VibeEnum.CRICKET]: 'Cricket',
+    [VibeEnum.FOOTBALL]: 'Football',
+    [VibeEnum.GYM]: 'Gym',
+    [VibeEnum.YOGA]: 'Yoga',
+    [VibeEnum.TRAVELLING]: 'Travelling',
+    [VibeEnum.FOODIE]: 'Foodie',
+    [VibeEnum.PHOTOGRAPHY]: 'Photography',
+    [VibeEnum.ART]: 'Art',
+    [VibeEnum.MOVIES]: 'Movies',
+    [VibeEnum.GAMING]: 'Gaming',
+    [VibeEnum.SWIMMING]: 'Swimming',
+    [VibeEnum.CYCLING]: 'Cycling',
+    [VibeEnum.COOKING]: 'Cooking',
+    [VibeEnum.DANCING]: 'Dancing',
+    [VibeEnum.SINGING]: 'Singing',
+    [VibeEnum.WRITING]: 'Writing',
+    [VibeEnum.HIKING]: 'Hiking',
+    [VibeEnum.DOG_LOVER]: 'Dog Lover',
+    [VibeEnum.TECH_ENTHUSIAST]: 'Tech Enthusiast',
+
+}
+
+export { GenderLabel, ReligionLabel, DietLabel, DrinkingHabitsLabel, SmokingHabitsLabel, TravelFrequencyLabel, InterestedInLabel, RelationshipPreferenceLabel, TravelTimeRangeLabel, HeightLabel, VibeLabel }

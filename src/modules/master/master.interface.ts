@@ -9,4 +9,5 @@ export interface IMasterListEnumKeys {
     relationshipPreference: 'relationshipPreference',
     travelTimeRange: 'travelTimeRange',
     height: 'height'
+    vibe: 'vibe'
 }

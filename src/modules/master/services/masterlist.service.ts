@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { CommonHelper } from "../../../common/helpers/common";
-import { GenderEnum, ReligionEnum, DietEnum, DrinkingHabitsEnum, SmokingHabitsEnum, TravelFrequencyEnum, InterestedInEnum, RelationshipPreferenceEnum, TravelTimeRangeEnum, HeightEnum } from "../../../common/enums/common_enums";
-import { GenderLabel, ReligionLabel, DietLabel, DrinkingHabitsLabel, SmokingHabitsLabel, TravelFrequencyLabel, InterestedInLabel, RelationshipPreferenceLabel, TravelTimeRangeLabel, HeightLabel } from "../../../common/constants/enum_labels";
+import { GenderEnum, ReligionEnum, DietEnum, DrinkingHabitsEnum, SmokingHabitsEnum, TravelFrequencyEnum, InterestedInEnum, RelationshipPreferenceEnum, TravelTimeRangeEnum, HeightEnum, VibeEnum } from "../../../common/enums/common_enums";
+import { GenderLabel, ReligionLabel, DietLabel, DrinkingHabitsLabel, SmokingHabitsLabel, TravelFrequencyLabel, InterestedInLabel, RelationshipPreferenceLabel, TravelTimeRangeLabel, HeightLabel, VibeLabel } from "../../../common/constants/enum_labels";
 import { IMasterListEnumKeys } from "../master.interface";
 import { DietConfig } from "../../../common/constants/enum_option_config";
 
@@ -51,6 +51,10 @@ export class MasterlistService {
         return this.commonHelper.getOptions(HeightEnum, HeightLabel);
     }
 
+    getVibeList() {
+        return this.commonHelper.getOptions(VibeEnum, VibeLabel);
+    }
+
     getMasterList(key: keyof IMasterListEnumKeys) {
         switch (key) {
             case 'gender':
@@ -73,6 +77,8 @@ export class MasterlistService {
                 return this.getTravelTimeRangeList();
             case 'height':
                 return this.getHeightList();
+            case 'vibe':
+                return this.getVibeList();
             default:
                 return [];
         }

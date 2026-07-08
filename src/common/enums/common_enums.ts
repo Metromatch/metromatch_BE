@@ -95,6 +95,32 @@ enum HeightEnum {
     SEVEN_PLUS = '7+',
 }
 
+enum VibeEnum {
+    TABLE_TENNIS = 'table_tennis',
+    MUSIC = 'music',
+    READING = 'reading',
+    GUITAR = 'guitar',
+    CRICKET = 'cricket',
+    FOOTBALL = 'football',
+    GYM = 'gym',
+    YOGA = 'yoga',
+    TRAVELLING = 'travelling',
+    FOODIE = 'foodie',
+    PHOTOGRAPHY = 'photography',
+    ART = 'art',
+    MOVIES = 'movies',
+    GAMING = 'gaming',
+    SWIMMING = 'swimming',
+    CYCLING = 'cycling',
+    COOKING = 'cooking',
+    DANCING = 'dancing',
+    SINGING = 'singing',
+    WRITING = 'writing',
+    HIKING = 'hiking',
+    DOG_LOVER = 'dog_lover',
+    TECH_ENTHUSIAST = 'tech_enthusiast',
+}
+
 // enum PartnerDiet {
 //     VEGETARIAN = 'vegetarian',
 //     NON_VEGETARIAN = 'non_vegetarian',
@@ -125,4 +151,4 @@ enum HeightEnum {
 // }
 
 
-export { GenderEnum, ReligionEnum, DietEnum, DrinkingHabitsEnum, SmokingHabitsEnum, TravelFrequencyEnum, InterestedInEnum, RelationshipPreferenceEnum, TravelTimeRangeEnum, HeightEnum }
+export { GenderEnum, ReligionEnum, DietEnum, DrinkingHabitsEnum, SmokingHabitsEnum, TravelFrequencyEnum, InterestedInEnum, RelationshipPreferenceEnum, TravelTimeRangeEnum, HeightEnum, VibeEnum }

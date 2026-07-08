@@ -66,4 +66,9 @@ export class MasterlistController {
         return this.masterlistService.getRelationshipPreferenceList();
     }
 
+    @Get('vibe')
+    getVibeList() {
+        return this.masterlistService.getVibeList();
+    }
+
 }

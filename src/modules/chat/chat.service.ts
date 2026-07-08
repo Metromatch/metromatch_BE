@@ -85,6 +85,13 @@ export class ChatService {
             return { conversationSid: match.twilioConversationSid };
         }
 
+        // Guard: both participant IDs must be non-empty before calling Twilio
+        if (!match.user1Id || !match.user2Id) {
+            throw new InternalServerErrorException(
+                `Match ${matchId} has missing participant IDs (user1Id=${match.user1Id}, user2Id=${match.user2Id})`,
+            );
+        }
+
         // Create a new Twilio Conversation
         try {
             const conversation = await this.client
@@ -127,7 +134,9 @@ export class ChatService {
                 await this.matchRepository.update({ id: matchId }, { twilioConversationSid: conversation.sid });
                 return { conversationSid: conversation.sid };
             }
-            throw new InternalServerErrorException('Failed to create conversation: ' + err?.message);
+            throw new InternalServerErrorException(
+                `Failed to create conversation (Twilio code=${err?.code}): ${err?.message}`,
+            );
         }
     }
 
@@ -169,12 +178,23 @@ export class ChatService {
     ): Promise<
         { sid: string; author: string; body: string; dateCreated: Date; index: number }[]
     > {
-        const { conversationSid } = await this.getOrCreateConversation(matchId, requestingUserId);
+        const match = await this.matchRepository.findOne({ where: { id: matchId } });
+        if (!match) throw new NotFoundException(`Match ${matchId} not found`);
+
+        if (match.user1Id !== requestingUserId && match.user2Id !== requestingUserId) {
+            throw new ForbiddenException('Not a participant of this match');
+        }
+
+        // If no conversation has been provisioned yet, return an empty list
+        // (avoids triggering Twilio participant creation on a read-only request)
+        if (!match.twilioConversationSid) {
+            return [];
+        }
 
         const messages = await this.client
             .conversations.v1
             .services(this.conversationsServiceSid)
-            .conversations(conversationSid)
+            .conversations(match.twilioConversationSid)
             .messages.list({ order, limit: pageSize });
 
         return messages.map((m) => ({
