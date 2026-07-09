@@ -36,16 +36,7 @@ export class MetroStationsController {
     @ApiQuery({ name: 'place', required: false, description: 'Search by place' })
     @ApiQuery({ name: 'line', required: false, description: 'Filter by metro line' })
     findAll(@Query('search') search?: string, @Query('place') place?: string, @Query('line') line?: string) {
-        if (search) {
-            return this.metroStationsService.search(search);
-        }
-        if (place) {
-            return this.metroStationsService.findByPlace(place);
-        }
-        if (line) {
-            return this.metroStationsService.findByLine(line);
-        }
-        return this.metroStationsService.findAll();
+        return this.metroStationsService.findAll(search, place, line);
     }
 
     @Get(':id')

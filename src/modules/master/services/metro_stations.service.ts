@@ -17,8 +17,8 @@ export class MetroStationsService {
         return this.metroStationsRepository.create(data);
     }
 
-    async findAll(): Promise<MetroStationsEntity[]> {
-        return this.metroStationsRepository.findAll();
+    async findAll(search?: string, place?: string, line?: string): Promise<MetroStationsEntity[]> {
+        return this.metroStationsRepository.findAll(search, place, line);
     }
 
     async findById(id: number): Promise<MetroStationsEntity> {
@@ -29,15 +29,15 @@ export class MetroStationsService {
         return station;
     }
 
-    async findByLine(line: string): Promise<MetroStationsEntity[]> {
-        return this.metroStationsRepository.findByLine(line);
-    }
-    async findByPlace(place: string): Promise<MetroStationsEntity[]> {
-        return this.metroStationsRepository.findByPlace(place);
-    }
-    async search(query: string): Promise<MetroStationsEntity[]> {
-        return this.metroStationsRepository.search(query);
-    }
+    // async findByLine(line: string, search?: string): Promise<MetroStationsEntity[]> {
+    //     return this.metroStationsRepository.findByLine(line, search);
+    // }
+    // async findByPlace(place: string, search?: string): Promise<MetroStationsEntity[]> {
+    //     return this.metroStationsRepository.findByPlace(place, search);
+    // }
+    // async search(query: string): Promise<MetroStationsEntity[]> {
+    //     return this.metroStationsRepository.search(query);
+    // }
 
     async update(id: number, dto: Partial<CreateMetroStationDto>): Promise<MetroStationsEntity> {
         const station = await this.metroStationsRepository.findById(id);

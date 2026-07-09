@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository, ILike } from "typeorm";
+import { Repository, ILike, FindOptionsWhere } from "typeorm";
 import { MetroStationsEntity } from "../entities/metro_stations.js";
 import { CreateMetroStationDto } from "../dto/create_metro_station.dto";
 import { ICreateMetroStation } from "../interfaces/create_metro_station.interface.js";
@@ -17,18 +17,38 @@ export class MetroStationsRepository {
         return this.metroStationsRepository.save(stations);
     }
 
-    async findAll(): Promise<MetroStationsEntity[]> {
-        return this.metroStationsRepository.find({ order: { name: 'ASC' } });
+    async findAll(search?: string, place?: string, line?: string): Promise<MetroStationsEntity[]> {
+        const where: FindOptionsWhere<MetroStationsEntity> = {};
+        if (search) {
+            where.name = ILike(`%${search}%`);
+        }
+        if (place) {
+            where.place = ILike(`%${place}%`);
+        }
+        if (line) {
+            where.line = ILike(`%${line}%`);
+        }
+        return this.metroStationsRepository.find({
+            where,
+            order: { name: 'ASC' }
+        });
     }
 
     async findById(id: number): Promise<MetroStationsEntity | null> {
         return this.metroStationsRepository.findOne({ where: { id } });
     }
 
-    async findByLine(line: string): Promise<MetroStationsEntity[]> {
+    async findByLine(line: string, search?: string): Promise<MetroStationsEntity[]> {
+        //filter based on search also
+        if (search) {
+            return this.metroStationsRepository.find({ where: { line, name: ILike(`%${search}%`) }, order: { name: 'ASC' } });
+        }
         return this.metroStationsRepository.find({ where: { line }, order: { name: 'ASC' } });
     }
-    async findByPlace(place: string): Promise<MetroStationsEntity[]> {
+    async findByPlace(place: string, search?: string): Promise<MetroStationsEntity[]> {
+        if (search) {
+            return this.metroStationsRepository.find({ where: { place, name: ILike(`%${search}%`) }, order: { name: 'ASC' } });
+        }
         return this.metroStationsRepository.find({ where: { place }, order: { name: 'ASC' } });
     }
     async search(query: string): Promise<MetroStationsEntity[]> {
