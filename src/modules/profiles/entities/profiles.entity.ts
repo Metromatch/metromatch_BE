@@ -26,6 +26,9 @@ export class Profile {
     @Column({ nullable: true })
     profession: string
 
+    @Column('text', { nullable: true, array: true, default: '{}' })
+    vibe: string[]
+
     @Column({ nullable: true })
     religion: string
 
