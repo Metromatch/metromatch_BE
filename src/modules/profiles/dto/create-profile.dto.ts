@@ -71,8 +71,6 @@ export class CreateProfileDto {
     @IsString()
     prefMaxHeight?: string;
 
-
-
     @ApiPropertyOptional()
     @IsOptional()
     @IsString()
@@ -86,12 +84,12 @@ export class CreateProfileDto {
     @ApiPropertyOptional()
     @IsOptional()
     @IsString()
-    prefDrinking?: string;
+    prefDrinkingHabits?: string;
 
     @ApiPropertyOptional()
     @IsOptional()
     @IsString()
-    prefSmoking?: string;
+    prefSmokingHabits?: string;
 
     @ApiPropertyOptional()
     @IsOptional()

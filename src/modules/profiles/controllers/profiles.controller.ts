@@ -70,7 +70,7 @@ export class ProfilesController {
             throw new UnauthorizedException('User not authenticated');
         }
 
-        const [profile, preferences, photos] = await Promise.all([
+        const [profile, preferences] = await Promise.all([
             this.profileService.create({
                 ...body,
                 userId,
@@ -79,10 +79,10 @@ export class ProfilesController {
                 ...body,
                 userId,
             }),
-            this.profilePhotoService.create({
-                ...body,
-                userId,
-            })
+            // this.profilePhotoService.create({
+            //     ...body,
+            //     userId,
+            // })
         ])
 
         this.usersService.markOnboardingCompleted(userId);
@@ -90,7 +90,7 @@ export class ProfilesController {
         return {
             profile,
             preferences,
-            photos,
+            // photos,
         }
     }
 

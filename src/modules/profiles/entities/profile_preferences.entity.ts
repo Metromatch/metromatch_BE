@@ -9,22 +9,22 @@ export class ProfilePreference {
     userId: string
 
     @Column({ nullable: true })
-    minAge: number
+    prefMinAge: number
 
     @Column({ nullable: true })
-    maxAge: number
+    prefMaxAge: number
 
     @Column({ nullable: true })
-    minHeight: string
+    prefMinHeight: string
 
     @Column({ nullable: true })
-    maxHeight: string
+    prefMaxHeight: string
 
     @Column({ nullable: true })
-    religion: string
+    prefReligion: string
 
     @Column({ nullable: true })
-    diet: string
+    prefDiet: string
 
     @Column({ nullable: true })
     smokingHabits: string
