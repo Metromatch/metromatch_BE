@@ -47,6 +47,9 @@ export class Profile {
     @Column({ nullable: true })
     interestedIn: string
 
+    @Column({ nullable: true })
+    frequentMetroStation: string
+
     @Column('text', { nullable: true, array: true, default: '{}' })
     travelTimeSlots: string[]
 

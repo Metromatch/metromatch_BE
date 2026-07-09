@@ -71,6 +71,8 @@ export class CreateProfileDto {
     @IsString()
     prefMaxHeight?: string;
 
+
+
     @ApiPropertyOptional()
     @IsOptional()
     @IsString()
@@ -103,13 +105,18 @@ export class CreateProfileDto {
 
     @ApiPropertyOptional()
     @IsOptional()
+    @IsEnum(RelationshipPreferenceEnum)
+    relationshipPreference?: RelationshipPreferenceEnum;
+
+    @ApiPropertyOptional()
+    @IsOptional()
     @IsEnum(TravelFrequencyEnum)
     travelFrequency?: TravelFrequencyEnum;
 
     @ApiPropertyOptional()
     @IsOptional()
-    @IsEnum(RelationshipPreferenceEnum)
-    relationshipPreference?: RelationshipPreferenceEnum;
+    @IsString()
+    frequentMetroStation?: string;
 
     @ApiPropertyOptional({ type: [String] })
     @IsOptional()
