@@ -1,19 +1,20 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { ChatController } from './chat.controller';
-import { ChatService } from './chat.service';
-import { Match } from '../matches/entities/match.entity';
-import { AuthModule } from '../auth/auth.module';
+import { ChatController } from './controllers/chat.controller';
+import { ChatTokenService } from './services/chat_token.service';
+import { ChatTokenEntity } from './entities/chat_token.entity';
+import { ChatTokenRepository } from './repositories/chat_token.repository';
+// import { AuthModule } from '../auth/auth.module';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Match]),
+        TypeOrmModule.forFeature([ChatTokenEntity]),
         ConfigModule,
-        AuthModule,
+        // AuthModule,
     ],
     controllers: [ChatController],
-    providers: [ChatService],
-    exports: [ChatService],
+    providers: [ChatTokenService, ChatTokenRepository],
+    exports: [ChatTokenService],
 })
-export class ChatModule {}
+export class ChatModule { }

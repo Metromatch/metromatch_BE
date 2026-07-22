@@ -16,8 +16,8 @@ import { MetroStationsService } from "../services/metro_stations.service";
 import { CreateMetroStationDto } from "../dto/create_metro_station.dto";
 
 @ApiTags('metro-stations')
-// @ApiBearerAuth()
-// @UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('/masterlist/metro-stations')
 export class MetroStationsController {
     constructor(

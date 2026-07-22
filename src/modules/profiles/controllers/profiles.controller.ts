@@ -8,6 +8,7 @@ import { UsersService } from '../../users/services/users.service';
 import { PaginationQueryDto } from '../dto/pagination-query.dto';
 import { CreateProfileDto } from '../dto/create-profile.dto';
 import { UpdateProfileDto } from '../dto/update-profile.dto';
+import { ChatTokenService } from 'src/modules/chat/services/chat_token.service';
 
 @ApiTags('profiles')
 @Controller('profiles')
@@ -17,6 +18,7 @@ export class ProfilesController {
         private readonly profilePreferenceService: ProfilePreferenceService,
         private readonly profilePhotoService: ProfilePhotoService,
         private readonly usersService: UsersService,
+        private readonly chatTokenService: ChatTokenService,
     ) { }
 
     @Get()
@@ -86,6 +88,7 @@ export class ProfilesController {
         ])
 
         this.usersService.markOnboardingCompleted(userId);
+        this.chatTokenService.createChatToken(userId);
 
         return {
             profile,

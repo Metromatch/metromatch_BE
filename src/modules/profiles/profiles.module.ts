@@ -16,11 +16,13 @@ import { ProfilePhotoService } from './services/profile_photos.service';
 import { ProfilesController } from './controllers/profiles.controller';
 
 import { AuthModule } from '../auth/auth.module';
+import { ChatModule } from '../chat/chat.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([Profile, ProfilePreference, ProfilePhoto]),
         AuthModule,
+        ChatModule,
     ],
     controllers: [ProfilesController],
     providers: [
