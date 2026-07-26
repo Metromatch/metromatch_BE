@@ -19,7 +19,24 @@ export class ProfileService {
     }
 
     async updateById(id: string, data: Partial<Profile>): Promise<any> {
-        return this.profileRepository.updateById(id, data);
+        const formattedPayload = {
+            name: data.name,
+            dob: data.dob,
+            gender: data.gender,
+            drinkingHabits: data.drinkingHabits,
+            smokingHabits: data.smokingHabits,
+            profession: data.profession,
+            vibe: data.vibe,
+            religion: data.religion,
+            height: data.height,
+            diet: data.diet,
+            travelFrequency: data.travelFrequency,
+            relationshipPreference: data.relationshipPreference,
+            interestedIn: data.interestedIn,
+            frequentMetroStation: data.frequentMetroStation,
+            travelTimeSlots: data.travelTimeSlots,
+        }
+        return this.profileRepository.updateById(id, formattedPayload);
     }
 
     async updateByUserId(userId: string, data: Partial<Profile>): Promise<any> {

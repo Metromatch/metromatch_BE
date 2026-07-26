@@ -7,13 +7,13 @@ import { UserPresence } from '../entities/user_presence.entity';
 export class PresenceService {
     constructor(
         private readonly userPresenceRepository: UserPresenceRepository,
-    ) {}
+    ) { }
 
     async updatePresence(
-        userId: string,
+        profileId: string,
         dto: UpdatePresenceDto,
     ): Promise<UserPresence> {
-        return this.userPresenceRepository.upsert(userId, {
+        return this.userPresenceRepository.upsert(profileId, {
             latitude: dto.latitude,
             longitude: dto.longitude,
             online: dto.online ?? true,
@@ -21,16 +21,16 @@ export class PresenceService {
     }
 
 
-    async setOffline(userId: string): Promise<void> {
-        return this.userPresenceRepository.setOffline(userId);
+    async setOffline(profileId: string): Promise<void> {
+        return this.userPresenceRepository.setOffline(profileId);
     }
 
-    async getPresence(userId: string): Promise<UserPresence | null> {
-        return this.userPresenceRepository.findByUserId(userId);
+    async getPresence(profileId: string): Promise<UserPresence | null> {
+        return this.userPresenceRepository.findByProfileId(profileId);
     }
 
     async getNearby(
-        requestingUserId: string,
+        requestingProfileId: string,
         lat: number,
         lng: number,
         radiusMeters: number,
@@ -40,7 +40,7 @@ export class PresenceService {
             lat,
             lng,
             radiusMeters,
-            requestingUserId,
+            requestingProfileId,
             limit,
         );
     }

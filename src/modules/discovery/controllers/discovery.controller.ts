@@ -10,13 +10,14 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { DiscoveryService } from '../services/discovery.service';
 import { DiscoveryQueryDto } from '../dto/discovery-query.dto';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { getProfileIdFromRequest } from 'src/common/helpers/common';
 
 @ApiTags('discovery')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller('discovery')
 export class DiscoveryController {
-    constructor(private readonly discoveryService: DiscoveryService) {}
+    constructor(private readonly discoveryService: DiscoveryService) { }
 
     /**
      * Returns nearby users (with profile data and distance) based on the
@@ -29,6 +30,7 @@ export class DiscoveryController {
     ) {
         const userId = req.user?.sub || req.user?.userId;
         if (!userId) throw new UnauthorizedException();
-        return this.discoveryService.discoverNearby(userId, query);
+        const profileId = getProfileIdFromRequest(req)
+        return this.discoveryService.discoverNearby(userId, profileId, query);
     }
 }

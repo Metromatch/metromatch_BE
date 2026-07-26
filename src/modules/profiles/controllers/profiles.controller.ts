@@ -9,6 +9,7 @@ import { PaginationQueryDto } from '../dto/pagination-query.dto';
 import { CreateProfileDto } from '../dto/create-profile.dto';
 import { UpdateProfileDto } from '../dto/update-profile.dto';
 import { ChatTokenService } from 'src/modules/chat/services/chat_token.service';
+import { getProfileIdFromRequest } from 'src/common/helpers/common';
 
 @ApiTags('profiles')
 @Controller('profiles')
@@ -68,15 +69,13 @@ export class ProfilesController {
     @Post('me')
     async createProfile(@Request() req: any, @Body() body: CreateProfileDto) {
         const userId = req.user?.sub || req.user?.userId;
-        if (!userId) {
+        const profileId = getProfileIdFromRequest(req)
+        if (!userId || !profileId) {
             throw new UnauthorizedException('User not authenticated');
         }
 
         const [profile, preferences] = await Promise.all([
-            this.profileService.create({
-                ...body,
-                userId,
-            }),
+            this.profileService.updateById(profileId, body),
             this.profilePreferenceService.create({
                 ...body,
                 userId,
@@ -88,7 +87,7 @@ export class ProfilesController {
         ])
 
         this.usersService.markOnboardingCompleted(userId);
-        this.chatTokenService.createChatToken(userId);
+        this.chatTokenService.createChatToken(profileId);
 
         return {
             profile,

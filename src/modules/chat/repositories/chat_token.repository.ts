@@ -15,8 +15,8 @@ export class ChatTokenRepository {
         return this.chatTokenRepository.save(chatToken);
     }
 
-    async findByUserId(userId: string): Promise<ChatTokenEntity | null> {
-        return this.chatTokenRepository.findOne({ where: { userId } });
+    async findByProfileId(profileId: string): Promise<ChatTokenEntity | null> {
+        return this.chatTokenRepository.findOne({ where: { profileId } });
     }
 
 }

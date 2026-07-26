@@ -14,17 +14,20 @@ import { UserEntity } from '../users/entities/users.entity';
 import { UserSessionEntity } from './entities/user_session.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { Profile } from '../profiles/entities/profiles.entity';
+import { ProfileRepository } from '../profiles/repositories/profile.repository';
+import { ProfileService } from '../profiles/services/profile.service';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([UserEntity, UserSessionEntity]),
+        TypeOrmModule.forFeature([UserEntity, UserSessionEntity, Profile]),
         PassportModule.register({ defaultStrategy: 'jwt' }),
         JwtModule.registerAsync({
             inject: [ConfigService],
             useFactory: (
                 configService: ConfigService,
             ) => ({
-                secret: configService.get('JWT_SECRET'),
+                secret: configService.get<string>('JWT_SECRET')!,
             }),
         })
     ],
@@ -37,6 +40,8 @@ import { JwtStrategy } from './strategies/jwt.strategy';
         UsersRepository,
         UserSessionRepository,
         JwtStrategy,
+        ProfileService,
+        ProfileRepository,
     ],
     exports: [PassportModule, JwtStrategy, UsersService, UsersRepository],
 })

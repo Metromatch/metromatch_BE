@@ -4,45 +4,43 @@ import {
     Request,
     UseGuards,
     UnauthorizedException,
-    Post,
-    Body,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { ChatTokenService } from '../services/chat_token.service';
 
 @ApiTags('chat')
-// @ApiBearerAuth()
-// @UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('chat')
 export class ChatController {
     constructor(private readonly chatTokenService: ChatTokenService) { }
 
-
-    @ApiOperation({ summary: 'get chat token for the current user' })
+    /** Returns an existing Stream token for the current user, or creates one if absent. */
+    @ApiOperation({ summary: 'Get (or create) the Stream chat token for the current user' })
     @Get('chattoken')
     async getToken(@Request() req: any) {
         const userId = req.user?.sub || req.user?.userId;
         if (!userId) throw new UnauthorizedException();
-        const token = this.chatTokenService.getChatToken(userId);
+
+        // Try to get existing token first
+        let token = await this.chatTokenService.getChatToken(userId);
+
+        // If no token, create one on the fly
+        if (!token) {
+            token = await this.chatTokenService.createChatToken(userId);
+        }
+
         return { token };
     }
 
-    // create token for the current user
+    /** Explicitly creates / refreshes the Stream token for the current user. */
+    @ApiOperation({ summary: 'Create / refresh the Stream chat token for the current user' })
     @Get('create-chat-token')
     async createToken(@Request() req: any) {
         const userId = req.user?.sub || req.user?.userId;
         if (!userId) throw new UnauthorizedException();
-        const token = this.chatTokenService.createChatToken(userId);
+        const token = await this.chatTokenService.createChatToken(userId);
         return { token };
     }
-
-    // @Post('create-chat-token')
-    // async createToken(@Body() body: any) {
-    //     const userId = body.userId;
-    //     if (!userId) throw new UnauthorizedException();
-    //     const token = await this.chatTokenService.createChatToken(userId);
-    //     return { token };
-    // }
-
 }

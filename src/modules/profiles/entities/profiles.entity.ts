@@ -8,10 +8,10 @@ export class Profile {
     @Column({ unique: true })
     userId: string
 
-    @Column({ nullable: false })
+    @Column({ nullable: true })
     name: string
 
-    @Column({ nullable: false })
+    @Column({ nullable: true })
     dob: string
 
     @Column({ nullable: true })

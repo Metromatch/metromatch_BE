@@ -8,7 +8,7 @@ export class SwipeRepository {
     constructor(
         @InjectRepository(Swipe)
         private readonly repository: Repository<Swipe>,
-    ) {}
+    ) { }
 
     async create(data: Partial<Swipe>): Promise<Swipe> {
         const entity = this.repository.create(data);
@@ -16,22 +16,22 @@ export class SwipeRepository {
     }
 
     async upsert(data: Partial<Swipe>): Promise<Swipe> {
-        await this.repository.upsert(data as Swipe, ['fromUserId', 'toUserId']);
+        await this.repository.upsert(data as Swipe, ['fromProfileId', 'toProfileId']);
         return this.repository.findOne({
-            where: { fromUserId: data.fromUserId, toUserId: data.toUserId },
+            where: { fromProfileId: data.fromProfileId, toProfileId: data.toProfileId },
         }) as Promise<Swipe>;
     }
 
     async findByUsers(
-        fromUserId: string,
-        toUserId: string,
+        fromProfileId: string,
+        toProfileId: string,
     ): Promise<Swipe | null> {
-        return this.repository.findOne({ where: { fromUserId, toUserId } });
+        return this.repository.findOne({ where: { fromProfileId, toProfileId } });
     }
 
-    async hasLiked(fromUserId: string, toUserId: string): Promise<boolean> {
+    async hasLiked(fromProfileId: string, toProfileId: string): Promise<boolean> {
         const swipe = await this.repository.findOne({
-            where: { fromUserId, toUserId },
+            where: { fromProfileId, toProfileId },
         });
         return (
             !!swipe &&
@@ -40,20 +40,20 @@ export class SwipeRepository {
         );
     }
 
-    async findSentByUser(userId: string): Promise<Swipe[]> {
-        return this.repository.find({ where: { fromUserId: userId } });
+    async findSentByUser(fromProfileId: string): Promise<Swipe[]> {
+        return this.repository.find({ where: { fromProfileId } });
     }
 
-    async findReceivedByUser(userId: string): Promise<Swipe[]> {
-        return this.repository.find({ where: { toUserId: userId } });
+    async findReceivedByUser(toProfileId: string): Promise<Swipe[]> {
+        return this.repository.find({ where: { toProfileId } });
     }
 
     /** Returns every userId that `fromUserId` has already swiped on (any direction). */
-    async findSwipedUserIds(fromUserId: string): Promise<string[]> {
+    async findSwipedUserIds(fromProfileId: string): Promise<string[]> {
         const rows = await this.repository.find({
-            select: { toUserId: true },
-            where: { fromUserId },
+            select: { toProfileId: true },
+            where: { fromProfileId },
         });
-        return rows.map((r) => r.toUserId);
+        return rows.map((r) => r.toProfileId);
     }
 }

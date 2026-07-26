@@ -11,20 +11,24 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { MatchService } from '../services/match.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { getProfileIdFromRequest } from 'src/common/helpers/common';
 
 @ApiTags('matches')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller('matches')
 export class MatchesController {
-    constructor(private readonly matchService: MatchService) {}
+    constructor(private readonly matchService: MatchService) { }
 
     /** List all active matches for the calling user */
     @Get()
     async getMatches(@Request() req: any) {
         const userId = req.user?.sub || req.user?.userId;
-        if (!userId) throw new UnauthorizedException();
-        return this.matchService.getMatches(userId);
+        const profileId = getProfileIdFromRequest(req)
+
+        if (!profileId || !userId) throw new UnauthorizedException();
+
+        return this.matchService.getMatches(profileId);
     }
 
     /** Get a specific match by ID */

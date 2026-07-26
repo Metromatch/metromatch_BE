@@ -3,7 +3,7 @@ import { Column, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 @Entity('user_presence')
 export class UserPresence {
     @PrimaryColumn('uuid')
-    userId: string;
+    profileId: string;
 
     @Column({ type: 'decimal', precision: 10, scale: 8, nullable: true })
     latitude: number;

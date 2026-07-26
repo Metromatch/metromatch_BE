@@ -5,6 +5,7 @@ import { UserSessionService } from "./user_session.service"
 import { SignupDto } from "../dto/signup.dto"
 import * as bcrypt from 'bcrypt'
 import { LoginDto } from "../dto/login.dto"
+import { ProfileService } from "src/modules/profiles/services/profile.service"
 
 @Injectable()
 export class AuthService {
@@ -12,11 +13,12 @@ export class AuthService {
         private readonly usersService: UsersService,
         private readonly tokenService: TokenService,
         private readonly sessionService: UserSessionService,
+        private readonly profilesService: ProfileService,
     ) { }
 
-    private async generateTokensAndSaveSession(userId: string, deviceId: string) {
-        const accessToken = this.tokenService.generateAccessToken(userId)
-        const refreshToken = this.tokenService.generateRefreshToken(userId)
+    private async generateTokensAndSaveSession(userId: string, deviceId: string, profileId?: string) {
+        const accessToken = this.tokenService.generateAccessToken(userId, profileId)
+        const refreshToken = this.tokenService.generateRefreshToken(userId, profileId)
         const [accessTokenHash, refreshTokenHash, existingSession] = await Promise.all([
             bcrypt.hash(accessToken, 10),
             bcrypt.hash(refreshToken, 10),
@@ -31,6 +33,7 @@ export class AuthService {
             response = await this.sessionService.createSession(payload)
         }
         return {
+            profileId: profileId || null,
             accessToken,
             refreshToken,
             refreshTokenExpiresAt: response.refreshTokenExpiresAt,
@@ -47,8 +50,9 @@ export class AuthService {
                 passwordHash
             }
             const user = await this.usersService.createUser(payload)
+            const profile = await this.profilesService.create({ userId: user.id })
 
-            const tokens = await this.generateTokensAndSaveSession(user.id, data.deviceId)
+            const tokens = await this.generateTokensAndSaveSession(user.id, data.deviceId, profile.id)
             return {
                 userId: user.id,
                 authenticated: true,
@@ -68,8 +72,9 @@ export class AuthService {
         if (!isPasswordValid) {
             throw new BadRequestException('Invalid credentials')
         }
-
-        const tokens = await this.generateTokensAndSaveSession(user?.id!, data.deviceId)
+        //fetch profile id
+        const profile = await this.profilesService.findByUserId(user?.id!)
+        const tokens = await this.generateTokensAndSaveSession(user?.id!, data.deviceId, profile?.id)
 
         return {
             userId: user.id,

@@ -11,13 +11,14 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { SwipeService } from '../services/swipe.service';
 import { CreateSwipeDto } from '../dto/create-swipe.dto';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { getProfileIdFromRequest } from 'src/common/helpers/common';
 
 @ApiTags('swipes')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller('swipes')
 export class SwipesController {
-    constructor(private readonly swipeService: SwipeService) {}
+    constructor(private readonly swipeService: SwipeService) { }
 
     /**
      * Create or update a swipe.
@@ -26,8 +27,9 @@ export class SwipesController {
     @Post()
     async swipe(@Request() req: any, @Body() dto: CreateSwipeDto) {
         const userId = req.user?.sub || req.user?.userId;
-        if (!userId) throw new UnauthorizedException();
-        return this.swipeService.swipe(userId, dto);
+        const profileId = getProfileIdFromRequest(req)
+        if (!userId || !profileId) throw new UnauthorizedException();
+        return this.swipeService.swipe(profileId, dto);
     }
 
     /** Swipes the calling user has sent */

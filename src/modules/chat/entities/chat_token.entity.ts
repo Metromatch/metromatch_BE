@@ -6,7 +6,7 @@ export class ChatTokenEntity {
     id: string;
 
     @Column({ type: 'uuid', unique: true, nullable: false })
-    userId: string;
+    profileId: string;
 
     @Column({ unique: true, nullable: false })
     chatToken: string;

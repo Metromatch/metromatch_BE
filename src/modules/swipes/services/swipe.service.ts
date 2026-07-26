@@ -15,17 +15,17 @@ export class SwipeService {
     constructor(
         private readonly swipeRepository: SwipeRepository,
         private readonly matchService: MatchService,
-    ) {}
+    ) { }
 
-    async swipe(fromUserId: string, dto: CreateSwipeDto): Promise<SwipeResult> {
-        if (fromUserId === dto.toUserId) {
+    async swipe(fromProfileId: string, dto: CreateSwipeDto): Promise<SwipeResult> {
+        if (fromProfileId === dto.toProfileId) {
             throw new ConflictException('Cannot swipe on yourself');
         }
 
         // Upsert swipe (re-swiping updates the type)
         const swipe = await this.swipeRepository.upsert({
-            fromUserId,
-            toUserId: dto.toUserId,
+            fromProfileId,
+            toProfileId: dto.toProfileId,
             swipeType: dto.swipeType,
         });
 
@@ -36,14 +36,14 @@ export class SwipeService {
 
         if (isPositiveSwipe) {
             const theyLikedBack = await this.swipeRepository.hasLiked(
-                dto.toUserId,
-                fromUserId,
+                dto.toProfileId,
+                fromProfileId,
             );
 
             if (theyLikedBack) {
                 const match = await this.matchService.createMatch(
-                    fromUserId,
-                    dto.toUserId,
+                    fromProfileId,
+                    dto.toProfileId,
                 );
                 return { swipe, matched: true, matchId: match.id };
             }
@@ -61,8 +61,8 @@ export class SwipeService {
     }
 
     /** All userIds the given user has already swiped on — used by discovery to exclude them. */
-    async getSwipedUserIds(userId: string): Promise<string[]> {
-        return this.swipeRepository.findSwipedUserIds(userId);
+    async getSwipedProfileIds(profileId: string): Promise<string[]> {
+        return this.swipeRepository.findSwipedUserIds(profileId);
     }
 }
 

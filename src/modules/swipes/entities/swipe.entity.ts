@@ -12,16 +12,16 @@ export enum SwipeType {
 }
 
 @Entity('swipes')
-@Unique(['fromUserId', 'toUserId'])
+@Unique(['fromProfileId', 'toProfileId'])
 export class Swipe {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column()
-    fromUserId: string;
+    fromProfileId: string;
 
     @Column()
-    toUserId: string;
+    toProfileId: string;
 
     @Column({ type: 'varchar', length: 20 })
     swipeType: SwipeType;

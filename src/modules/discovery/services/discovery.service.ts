@@ -13,13 +13,13 @@ export class DiscoveryService {
         private readonly swipeService: SwipeService,
         @InjectRepository(Profile)
         private readonly profileRepository: Repository<Profile>,
-    ) {}
+    ) { }
 
-    async discoverNearby(userId: string, dto: DiscoveryQueryDto) {
+    async discoverNearby(userId: string, profileId: string, dto: DiscoveryQueryDto) {
         const { radius = 500, page = 1, limit = 20 } = dto;
 
         // Get caller's current location
-        const myPresence = await this.presenceService.getPresence(userId);
+        const myPresence = await this.presenceService.getPresence(profileId);
         if (!myPresence || myPresence.latitude == null || myPresence.longitude == null) {
             return {
                 data: [],
@@ -27,15 +27,15 @@ export class DiscoveryService {
                 message: 'Update your location first to discover nearby users',
             };
         }
-
         // Find all nearby user IDs (with distance), excluding self
         const nearbyPresences = await this.presenceService.getNearby(
-            userId,
+            profileId,
             Number(myPresence.latitude),
             Number(myPresence.longitude),
             radius,
             1000, // fetch a large set, we'll paginate in memory after profile join
         );
+        console.log('ppppppppppp', profileId, nearbyPresences)
 
         if (nearbyPresences.length === 0) {
             return {
@@ -45,10 +45,10 @@ export class DiscoveryService {
         }
 
         // Exclude users the caller has already swiped on (any direction)
-        const alreadySwiped = new Set(await this.swipeService.getSwipedUserIds(userId));
+        const alreadySwiped = new Set(await this.swipeService.getSwipedProfileIds(profileId));
 
         const nearbyUserIds = nearbyPresences
-            .map((p) => p.userId)
+            .map((p) => p.profileId)
             .filter((id) => !alreadySwiped.has(id));
 
         if (nearbyUserIds.length === 0) {
@@ -59,19 +59,19 @@ export class DiscoveryService {
         }
 
         const distanceMap = new Map(
-            nearbyPresences.map((p) => [p.userId, Math.round(p.distanceMeters)]),
+            nearbyPresences.map((p) => [p.profileId, Math.round(p.distanceMeters)]),
         );
 
         // Join with profiles
         const profiles = await this.profileRepository
             .createQueryBuilder('profile')
-            .where('profile.userId IN (:...ids)', { ids: nearbyUserIds })
+            .where('profile.id IN (:...ids)', { ids: nearbyUserIds })
             .getMany();
 
         // Merge distance into profile result
         const enriched = profiles.map((profile) => ({
             ...profile,
-            distanceMeters: distanceMap.get(profile.userId) ?? null,
+            distanceMeters: distanceMap.get(profile.id) ?? null,
         }));
 
         // Sort by distance ascending

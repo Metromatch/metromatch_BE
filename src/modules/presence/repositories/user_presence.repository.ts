@@ -18,7 +18,7 @@ export class UserPresenceRepository {
      * and silently skips computed columns, leaving `location` as NULL.
      */
     async upsert(
-        userId: string,
+        profileId: string,
         data: Partial<UserPresence>,
     ): Promise<UserPresence> {
         const { latitude, longitude, online = true } = data as any;
@@ -27,23 +27,23 @@ export class UserPresenceRepository {
 
         await this.dataSource.query(
             `
-            INSERT INTO user_presence ("userId", latitude, longitude, location, online, "updatedAt")
+            INSERT INTO user_presence ("profileId", latitude, longitude, location, online, "updatedAt")
             VALUES ($1, $2, $3, ST_GeogFromText($4), $5, NOW())
-            ON CONFLICT ("userId") DO UPDATE
+            ON CONFLICT ("profileId") DO UPDATE
                 SET latitude     = EXCLUDED.latitude,
                     longitude    = EXCLUDED.longitude,
                     location     = EXCLUDED.location,
                     online       = EXCLUDED.online,
                     "updatedAt" = NOW()
             `,
-            [userId, latitude, longitude, pointWkt, online],
+            [profileId, latitude, longitude, pointWkt, online],
         );
 
-        return this.repository.findOne({ where: { userId } }) as Promise<UserPresence>;
+        return this.repository.findOne({ where: { profileId } }) as Promise<UserPresence>;
     }
 
-    async findByUserId(userId: string): Promise<UserPresence | null> {
-        return this.repository.findOne({ where: { userId } });
+    async findByProfileId(profileId: string): Promise<UserPresence | null> {
+        return this.repository.findOne({ where: { profileId } });
     }
 
     /**
@@ -55,13 +55,13 @@ export class UserPresenceRepository {
         lat: number,
         lng: number,
         radiusMeters: number,
-        excludeUserId: string,
+        excludeProfileId: string,
         limit: number = 50,
-    ): Promise<{ userId: string; distanceMeters: number; latitude: number; longitude: number }[]> {
+    ): Promise<{ profileId: string; distanceMeters: number; latitude: number; longitude: number }[]> {
         const result = await this.dataSource.query(
             `
             SELECT
-                up."userId"         AS "userId",
+                up."profileId"         AS "profileId",
                 up.latitude         AS latitude,
                 up.longitude        AS longitude,
                 ST_Distance(
@@ -71,7 +71,7 @@ export class UserPresenceRepository {
             FROM user_presence up
             WHERE
                 up.online = true
-                AND up."userId" != $3
+                AND up."profileId" != $3
                 AND up.location IS NOT NULL
                 AND ST_DWithin(
                     up.location,
@@ -81,14 +81,14 @@ export class UserPresenceRepository {
             ORDER BY "distanceMeters" ASC
             LIMIT $5
             `,
-            [lat, lng, excludeUserId, radiusMeters, limit],
+            [lat, lng, excludeProfileId, radiusMeters, limit],
         );
         return result;
     }
 
-    async setOffline(userId: string): Promise<void> {
+    async setOffline(profileId: string): Promise<void> {
         await this.repository.update(
-            { userId },
+            { profileId },
             { online: false, lastSeenAt: new Date() },
         );
     }

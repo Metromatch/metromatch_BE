@@ -7,14 +7,15 @@ export class TokenService {
         private readonly jwtService: JwtService,
     ) { }
 
-    generateAccessToken(userId: string) {
-        return this.jwtService.sign({ sub: userId }, { expiresIn: '2h' })
+    generateAccessToken(userId: string, profileId: string | null = null) {
+        return this.jwtService.sign({ sub: userId, profileId }, { expiresIn: '2h' })
     }
 
-    generateRefreshToken(userId: string) {
+    generateRefreshToken(userId: string, profileId: string | null = null) {
         return this.jwtService.sign(
             {
                 sub: userId,
+                profileId
             },
             {
                 expiresIn: '30d',

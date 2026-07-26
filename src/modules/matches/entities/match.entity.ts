@@ -7,16 +7,16 @@ import {
 } from 'typeorm';
 
 @Entity('matches')
-@Unique(['user1Id', 'user2Id'])
+@Unique(['user1ProfileId', 'user2ProfileId'])
 export class Match {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column()
-    user1Id: string;
+    user1ProfileId: string;
 
     @Column()
-    user2Id: string;
+    user2ProfileId: string;
 
     @CreateDateColumn()
     matchedAt: Date;

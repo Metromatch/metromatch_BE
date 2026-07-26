@@ -223,12 +223,12 @@ export class ChatTokenService {
         private readonly chatTokenRepository: ChatTokenRepository,
     ) { }
 
-    async createChatToken(userId: string): Promise<string> {
+    async createChatToken(profileId: string): Promise<string> {
         try {
-            if (!userId) return '';
-            const chatToken = serverClient.createToken(userId);
+            if (!profileId) return '';
+            const chatToken = serverClient.createToken(profileId);
 
-            await this.chatTokenRepository.create({ userId, chatToken });
+            await this.chatTokenRepository.create({ profileId, chatToken });
             return chatToken;
 
         } catch (error) {
@@ -236,9 +236,9 @@ export class ChatTokenService {
         }
     }
 
-    async getChatToken(userId: string): Promise<string> {
-        if (!userId) return '';
-        const chatToken = await this.chatTokenRepository.findByUserId(userId);
+    async getChatToken(profileId: string): Promise<string> {
+        if (!profileId) return '';
+        const chatToken = await this.chatTokenRepository.findByProfileId(profileId);
         if (!chatToken) return '';
         return chatToken.chatToken;
     }
