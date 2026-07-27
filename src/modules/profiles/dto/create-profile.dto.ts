@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsDateString, IsNumber, IsArray, IsEnum } from 'class-validator';
+import { IsString, IsOptional, IsDateString, IsNumber, IsArray, IsEnum, MaxLength } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { DietEnum, DrinkingHabitsEnum, GenderEnum, HeightEnum, RelationshipPreferenceEnum, ReligionEnum, SmokingHabitsEnum, TravelFrequencyEnum } from 'src/common/enums/common_enums';
 
@@ -121,4 +121,10 @@ export class CreateProfileDto {
     @IsArray()
     @IsString({ each: true })
     travelTimeSlots?: string[];
+
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsString()
+    @MaxLength(200)
+    bio?: string;
 }   

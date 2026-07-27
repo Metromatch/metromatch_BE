@@ -35,6 +35,7 @@ export class ProfileService {
             interestedIn: data.interestedIn,
             frequentMetroStation: data.frequentMetroStation,
             travelTimeSlots: data.travelTimeSlots,
+            bio: data.bio,
         }
         return this.profileRepository.updateById(id, formattedPayload);
     }

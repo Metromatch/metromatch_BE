@@ -16,6 +16,8 @@ import { SwipesModule } from './modules/swipes/swipes.module';
 import { EncountersModule } from './modules/encounters/encounters.module';
 import { MatchesModule } from './modules/matches/matches.module';
 import { ChatModule } from './modules/chat/chat.module';
+import { FavoritesModule } from './modules/favorites/favorites.module';
+import { PaymentsModule } from './modules/payments/payment.module';
 
 @Module({
   imports: [
@@ -23,11 +25,11 @@ import { ChatModule } from './modules/chat/chat.module';
       pinoHttp: {
         transport: process.env.NODE_ENV !== 'production'
           ? {
-              targets: [
-                { target: 'pino-pretty', options: { colorize: true } },
-                { target: 'pino/file', options: { destination: './app.log', mkdir: true } },
-              ],
-            }
+            targets: [
+              { target: 'pino-pretty', options: { colorize: true } },
+              { target: 'pino/file', options: { destination: './app.log', mkdir: true } },
+            ],
+          }
           : undefined,
       },
     }),
@@ -75,6 +77,8 @@ import { ChatModule } from './modules/chat/chat.module';
     EncountersModule,
     MatchesModule,
     ChatModule,
+    FavoritesModule,
+    PaymentsModule
   ],
   controllers: [AppController],
   providers: [AppService],
